@@ -1,5 +1,5 @@
 import { DefaultTheme } from "styled-components";
-import colors from "./constants/colors";
+import colors from "../constants/colors";
 
 export const theme: DefaultTheme = {
   red: "#E51013",

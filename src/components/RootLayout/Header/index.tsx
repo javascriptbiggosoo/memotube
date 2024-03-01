@@ -7,7 +7,7 @@ import {
 } from "framer-motion";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { isLoggedInState } from "../../../atoms";
+import { isLoggedInState } from "../../../atoms/user";
 
 const NavVariants = {
   top: { backgroundColor: "rgba(0,0,0,0)" },
@@ -39,7 +39,12 @@ export default function Header() {
       >
         <Col>
           <Link to="/">메모튜브</Link>
+        </Col>
+        <Col>
           <Items>
+            <Item>
+              <Link to="/about">About</Link>
+            </Item>
             <Item>
               {isLoggedIn ? (
                 <Link
@@ -59,14 +64,13 @@ export default function Header() {
             </Item>
           </Items>
         </Col>
-        <Col>둘러보기</Col>
       </Nav>
     </Container>
   );
 }
 
 const Container = styled.header`
-  position: fixed;
+  position: relative;
   align-items: center;
   width: 100vw;
   top: 0;

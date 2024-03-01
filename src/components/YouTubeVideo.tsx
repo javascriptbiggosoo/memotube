@@ -7,8 +7,8 @@ interface Props {
 
 export const YouTubeVideo = ({ videoId }: Props) => {
   const opts = {
-    height: "390",
-    width: "640",
+    height: "540",
+    width: "960",
     playerVars: {
       autoplay: 0, // 자동 재생 비활성화
     },
