@@ -6,16 +6,17 @@ interface MemoProps {
   memo: string;
 }
 
-export default function Memo({ time, memo }: MemoProps) {
+export default function VideoMemo({ time, memo }: MemoProps) {
   return (
     <Container>
       <div>{time}</div>
       <div>{memo}</div>
+      <button>x</button>
     </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;

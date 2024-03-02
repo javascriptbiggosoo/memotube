@@ -1,11 +1,17 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import extractYouTubeID from "../../utils/extractYouTubeID";
+import { TextField } from "@mui/material";
 
 type FormValues = {
   url: string;
 };
 
-export default function VideoUrlInput() {
+interface VideoUrlInputProps {
+  onUrlSubmit: (url: string) => void;
+}
+
+export default function VideoUrlInput({ onUrlSubmit }: VideoUrlInputProps) {
   const {
     register,
     handleSubmit,
@@ -13,13 +19,26 @@ export default function VideoUrlInput() {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    const url = extractYouTubeID(data.url);
+    if (url) {
+      onUrlSubmit(url);
+      // TODO: 인풋 비우기
+    } else {
+      console.log("유효하지 않은 URL");
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="url-input">Video URL</label>
-      <input id="url-input" {...register("url")} />
-      <button type="submit">ㅇ</button>
+      <TextField
+        id="url-input"
+        label="Video URL"
+        variant="filled"
+        color="primary"
+        {...register("url")}
+        fullWidth
+      />
     </form>
   );
 }

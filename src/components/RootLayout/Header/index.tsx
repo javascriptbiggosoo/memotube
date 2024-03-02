@@ -74,7 +74,7 @@ const Container = styled.header`
   align-items: center;
   width: 100vw;
   top: 0;
-  color: ${(props) => props.theme.white.lighter};
+  color: ${(props) => props.theme.black.darker};
   z-index: 999;
 `;
 const Nav = styled(motion.nav)`
@@ -93,10 +93,11 @@ const Items = styled.ul`
 `;
 const Item = styled.li`
   margin-right: 20px;
-  color: ${(props) => props.theme.white.darker};
+  color: ${(props) => props.theme.black.lighter};
   transition: color 0.3s ease-in-out;
   &:hover {
-    color: ${(props) => props.theme.white.lighter};
+    color: ${(props) => props.theme.black.darker};
+    font-weight: bold;
   }
   position: relative;
   display: flex;

@@ -8,13 +8,14 @@ export default function HomePage() {
 
   function showVideo(memo: string) {
     setVideoUrl(memo);
+    // 메모패드 초기화
   }
   return (
     <main>
       {/* TODO: 펼치기 접기 */}
-      <VideoUrlInput />
+      <VideoUrlInput onUrlSubmit={showVideo} />
       <YouTubeVideo videoId={videoUrl} />
-      <MemoPad memos={[{ time: "0:00", memo: "앙" }]} />
+      <MemoPad />
       {/* TODO: 베스트 영상들 모음 추가 */}
     </main>
   );

@@ -1,15 +1,15 @@
+import { Button, TextField } from "@mui/material";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type FormValues = {
   memo: string;
 };
-
-export default function MemoInput({
-  onMemoSubmit,
-}: {
+interface MemoInputProps {
   onMemoSubmit: (memo: string) => void;
-}) {
+}
+
+export default function MemoInput({ onMemoSubmit }: MemoInputProps) {
   const {
     register,
     handleSubmit,
@@ -23,9 +23,15 @@ export default function MemoInput({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="memo-input">00:00</label>
-      <input id="memo-input" {...register("memo")} />
-      <button type="submit">메모 저장</button>
+      <TextField
+        id="memo-input"
+        label="00:00"
+        variant="outlined"
+        {...register("memo")}
+        fullWidth
+      />
+
+      <Button type="submit">메모 저장</Button>
     </form>
   );
 }

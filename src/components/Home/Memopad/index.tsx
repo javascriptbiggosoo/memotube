@@ -1,22 +1,29 @@
-import React from "react";
-import Memo from "./Memo";
+import React, { useState } from "react";
+import VideoMemo from "./VideoMemo";
 import MemoInput from "./MemoInput";
+import Memo from "../../../types/memo";
 
-interface MemoPadProps {
-  memos: { time: string; memo: string }[];
-  onAddMemo: (memo: { time: string; memo: string }) => void;
-}
+export default function MemoPad() {
+  const [memos, setMemos] = useState<Memo[]>([
+    { time: "0:00", memoText: "앙", id: "1" },
+  ]);
 
-export default function MemoPad({ memos, onAddMemo }: MemoPadProps) {
   function handleMemoSubmit(memo: string) {
-    onAddMemo({ time: "00:00", memo });
+    setMemos((prevMemos) => {
+      return [
+        ...prevMemos,
+        { time: "0:00", memoText: memo, id: crypto.randomUUID() },
+      ];
+    });
   }
   return (
     <div>
       <MemoInput onMemoSubmit={handleMemoSubmit} />
-      {memos.map((memo, index) => (
-        <Memo key={index} time={memo.time} memo={memo.memo} />
-      ))}
+      <ul>
+        {memos.map((memo) => (
+          <VideoMemo key={memo.id} time={memo.time} memo={memo.memoText} />
+        ))}
+      </ul>
     </div>
   );
 }
