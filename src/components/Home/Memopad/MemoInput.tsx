@@ -7,28 +7,31 @@ type FormValues = {
 };
 interface MemoInputProps {
   onMemoSubmit: (memo: string) => void;
+  currentTime: string;
 }
 
-export default function MemoInput({ onMemoSubmit }: MemoInputProps) {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<FormValues>();
+export default function MemoInput({
+  onMemoSubmit,
+  currentTime,
+}: MemoInputProps) {
+  const { register, handleSubmit } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     onMemoSubmit(data.memo);
+  };
+  const handleFocus = () => {
+    // 시간 받아옴
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextField
         id="memo-input"
-        label="00:00"
+        label={currentTime}
         variant="outlined"
         {...register("memo")}
         fullWidth
+        onFocus={handleFocus}
       />
 
       <Button type="submit">메모 저장</Button>

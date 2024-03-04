@@ -1,29 +1,41 @@
 import React, { useState } from "react";
-import VideoMemo from "./VideoMemo";
+import MemoItem from "./MemoItem";
 import MemoInput from "./MemoInput";
 import Memo from "../../../types/memo";
+import { List } from "@mui/material";
 
-export default function MemoPad() {
+interface MemoPadProps {
+  currentTime: string;
+}
+
+export default function MemoPad({ currentTime }: MemoPadProps) {
   const [memos, setMemos] = useState<Memo[]>([
     { time: "0:00", memoText: "앙", id: "1" },
   ]);
 
-  function handleMemoSubmit(memo: string) {
+  function handleMemoSubmit(memoText: string) {
+    if (!memoText) return;
     setMemos((prevMemos) => {
       return [
         ...prevMemos,
-        { time: "0:00", memoText: memo, id: crypto.randomUUID() },
+        { time: currentTime, memoText, id: crypto.randomUUID() },
       ];
     });
   }
+  function handleDeleteMemo(event: React.MouseEvent<HTMLButtonElement>) {}
   return (
     <div>
-      <MemoInput onMemoSubmit={handleMemoSubmit} />
-      <ul>
+      <MemoInput currentTime={currentTime} onMemoSubmit={handleMemoSubmit} />
+      <List>
         {memos.map((memo) => (
-          <VideoMemo key={memo.id} time={memo.time} memo={memo.memoText} />
+          <MemoItem
+            key={memo.id}
+            time={memo.time}
+            memoText={memo.memoText}
+            onDeleteMemo={handleDeleteMemo}
+          />
         ))}
-      </ul>
+      </List>
     </div>
   );
 }

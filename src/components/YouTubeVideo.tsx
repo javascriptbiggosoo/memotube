@@ -1,11 +1,12 @@
 import React from "react";
-import YouTube from "react-youtube";
+import YouTube, { YouTubeEvent } from "react-youtube";
 
 interface Props {
   videoId: string;
+  onPause?: (event: YouTubeEvent) => void;
 }
 
-export const YouTubeVideo = ({ videoId }: Props) => {
+export const YouTubeVideo = ({ videoId, onPause }: Props) => {
   const opts = {
     height: "540",
     width: "960",
@@ -14,5 +15,5 @@ export const YouTubeVideo = ({ videoId }: Props) => {
     },
   };
 
-  return <YouTube videoId={videoId} opts={opts} />;
+  return <YouTube videoId={videoId} opts={opts} onPause={onPause} />;
 };
