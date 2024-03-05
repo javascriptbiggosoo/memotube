@@ -9,6 +9,9 @@ import React from "react";
 import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import { useSetRecoilState } from "recoil";
+import { startTimeState } from "../../../atoms/video";
+import parseTimeToSeconds from "../../../utils/parseTimeToSeconds";
 interface MemoProps {
   time: string;
   memoText: string;
@@ -20,9 +23,13 @@ export default function MemoItem({
   memoText: memo,
   onDeleteMemo,
 }: MemoProps) {
+  const setStartTime = useSetRecoilState(startTimeState);
+
   return (
     <Container
-      onClick={() => {}}
+      onClick={() => {
+        setStartTime(parseTimeToSeconds(time));
+      }}
       secondaryAction={
         <IconButton edge="end" aria-label="delete" onClick={onDeleteMemo}>
           <DeleteIcon />
