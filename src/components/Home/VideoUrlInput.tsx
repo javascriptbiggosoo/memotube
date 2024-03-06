@@ -15,8 +15,8 @@ export default function VideoUrlInput({ onUrlSubmit }: VideoUrlInputProps) {
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
+    // watch,
+    // formState: { errors },
   } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {

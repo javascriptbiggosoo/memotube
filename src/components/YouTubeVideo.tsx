@@ -1,7 +1,7 @@
 import React from "react";
 import YouTube, { YouTubeEvent } from "react-youtube";
-import { useRecoilState } from "recoil";
-import { startTimeState } from "../atoms/video";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { playerVarsState, playerState } from "../atoms/video";
 
 interface Props {
   videoId: string;
@@ -9,15 +9,25 @@ interface Props {
 }
 
 export const YouTubeVideo = ({ videoId, onPause }: Props) => {
-  const [startTime, setStartTime] = useRecoilState(startTimeState);
+  const playerVars = useRecoilValue(playerVarsState);
+  const setPlayer = useSetRecoilState(playerState);
+
+  function handleReady(event: YouTubeEvent) {
+    setPlayer(event.target);
+  }
+
   const opts = {
     height: "540",
     width: "960",
-    playerVars: {
-      autoplay: 1, // 자동 재생
-      start: startTime, // 시작 시간
-    },
+    playerVars,
   };
 
-  return <YouTube videoId={videoId} opts={opts} onPause={onPause} />;
+  return (
+    <YouTube
+      videoId={videoId}
+      opts={opts}
+      onPause={onPause}
+      onReady={handleReady}
+    />
+  );
 };

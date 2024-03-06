@@ -6,12 +6,12 @@ import {
   ListItemText,
 } from "@mui/material";
 import React from "react";
-import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useSetRecoilState } from "recoil";
-import { startTimeState } from "../../../atoms/video";
+import { playerVarsState } from "../../../atoms/video";
 import parseTimeToSeconds from "../../../utils/parseTimeToSeconds";
+
 interface MemoProps {
   time: string;
   memoText: string;
@@ -23,12 +23,16 @@ export default function MemoItem({
   memoText: memo,
   onDeleteMemo,
 }: MemoProps) {
-  const setStartTime = useSetRecoilState(startTimeState);
+  const setplayerVars = useSetRecoilState(playerVarsState);
 
   return (
-    <Container
+    <ListItem
+      style={{ cursor: "pointer" }}
       onClick={() => {
-        setStartTime(parseTimeToSeconds(time));
+        setplayerVars({
+          autoplay: 1,
+          start: parseTimeToSeconds(time),
+        });
       }}
       secondaryAction={
         <IconButton edge="end" aria-label="delete" onClick={onDeleteMemo}>
@@ -43,13 +47,6 @@ export default function MemoItem({
       </ListItemAvatar>
 
       <ListItemText primary={memo} secondary={time} />
-    </Container>
+    </ListItem>
   );
 }
-
-const Container = styled(ListItem)`
-  /* display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row; */
-`;

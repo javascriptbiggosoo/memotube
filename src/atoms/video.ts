@@ -1,6 +1,20 @@
+import { YouTubePlayer } from "react-youtube";
 import { atom } from "recoil";
 
-export const startTimeState = atom<number>({
-  key: "startTimeState",
-  default: 0,
+type PlayerVars = {
+  autoplay: number;
+  start: number;
+};
+
+export const playerVarsState = atom<PlayerVars>({
+  key: "playerVarsState",
+  default: {
+    autoplay: 0,
+    start: 0,
+  },
+});
+
+export const playerState = atom<typeof YouTubePlayer>({
+  key: "playerState",
+  default: null,
 });

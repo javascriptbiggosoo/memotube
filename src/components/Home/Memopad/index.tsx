@@ -10,7 +10,7 @@ interface MemoPadProps {
 
 export default function MemoPad({ currentTime }: MemoPadProps) {
   const [memos, setMemos] = useState<Memo[]>([
-    { time: "0:00", memoText: "앙", id: "1" },
+    { time: "0:00", memoText: "등록된 메모입니다.", id: "1" },
   ]);
 
   function handleMemoSubmit(memoText: string) {
@@ -22,7 +22,7 @@ export default function MemoPad({ currentTime }: MemoPadProps) {
       ];
     });
   }
-  function handleDeleteMemo(event: React.MouseEvent<HTMLButtonElement>) {}
+  function handleDeleteMemo() {}
   return (
     <div>
       <MemoInput currentTime={currentTime} onMemoSubmit={handleMemoSubmit} />
