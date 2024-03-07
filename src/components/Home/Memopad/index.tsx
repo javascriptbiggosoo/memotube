@@ -3,6 +3,7 @@ import MemoItem from "./MemoItem";
 import MemoInput from "./MemoInput";
 import Memo from "../../../types/memo";
 import { List } from "@mui/material";
+import styled from "styled-components";
 
 interface MemoPadProps {
   currentTime: string;
@@ -10,7 +11,7 @@ interface MemoPadProps {
 
 export default function MemoPad({ currentTime }: MemoPadProps) {
   const [memos, setMemos] = useState<Memo[]>([
-    { time: "0:00", memoText: "등록된 메모입니다.", id: "1" },
+    { time: "00:00", memoText: "등록된 메모입니다.", id: "1" },
   ]);
 
   function handleMemoSubmit(memoText: string) {
@@ -24,7 +25,7 @@ export default function MemoPad({ currentTime }: MemoPadProps) {
   }
   function handleDeleteMemo() {}
   return (
-    <div>
+    <Section>
       <MemoInput currentTime={currentTime} onMemoSubmit={handleMemoSubmit} />
       <List>
         {memos.map((memo) => (
@@ -36,6 +37,14 @@ export default function MemoPad({ currentTime }: MemoPadProps) {
           />
         ))}
       </List>
-    </div>
+    </Section>
   );
 }
+
+const Section = styled.section`
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  margin-top: 20px;
+  background-color: #f5f5f5;
+`;

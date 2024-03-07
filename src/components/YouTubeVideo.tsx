@@ -1,20 +1,16 @@
 import React from "react";
 import YouTube, { YouTubeEvent } from "react-youtube";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { playerVarsState, playerState } from "../atoms/video";
+import { useRecoilValue } from "recoil";
+import { playerVarsState } from "../atoms/video";
 
 interface Props {
   videoId: string;
-  onPause?: (event: YouTubeEvent) => void;
+  onStateChange?: (event: YouTubeEvent) => void;
 }
 
-export const YouTubeVideo = ({ videoId, onPause }: Props) => {
+export const YouTubeVideo = ({ videoId, onStateChange }: Props) => {
   const playerVars = useRecoilValue(playerVarsState);
-  const setPlayer = useSetRecoilState(playerState);
-
-  function handleReady(event: YouTubeEvent) {
-    setPlayer(event.target);
-  }
+  // const setPlayer = useSetRecoilState(playerState);
 
   const opts = {
     height: "540",
@@ -23,11 +19,6 @@ export const YouTubeVideo = ({ videoId, onPause }: Props) => {
   };
 
   return (
-    <YouTube
-      videoId={videoId}
-      opts={opts}
-      onPause={onPause}
-      onReady={handleReady}
-    />
+    <YouTube videoId={videoId} opts={opts} onStateChange={onStateChange} />
   );
 };

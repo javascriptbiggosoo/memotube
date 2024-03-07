@@ -12,18 +12,13 @@ interface VideoUrlInputProps {
 }
 
 export default function VideoUrlInput({ onUrlSubmit }: VideoUrlInputProps) {
-  const {
-    register,
-    handleSubmit,
-    // watch,
-    // formState: { errors },
-  } = useForm<FormValues>();
+  const { register, handleSubmit, setValue } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     const url = extractYouTubeID(data.url);
     if (url) {
       onUrlSubmit(url);
-      // TODO: 인풋 비우기
+      setValue("url", "");
     } else {
       console.log("유효하지 않은 URL");
     }
