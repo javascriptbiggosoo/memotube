@@ -1,8 +1,8 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRecoilValue } from "recoil";
 import { Button, TextField } from "@mui/material";
-import { playerState } from "../../../atoms/video";
+import { useSetRecoilState } from "recoil";
+import { pauseVideoState } from "../../../atoms/video";
 
 type FormValues = {
   memo: string;
@@ -17,15 +17,15 @@ export default function MemoInput({
   currentTime,
 }: MemoInputProps) {
   const { register, handleSubmit, setValue } = useForm<FormValues>();
-  const player = useRecoilValue(playerState);
+  const setPauseVideo = useSetRecoilState(pauseVideoState);
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     onMemoSubmit(data.memo);
     setValue("memo", "");
+    setPauseVideo(false);
   };
   const handleFocus = () => {
-    player.pauseVideo();
-    // TODO: 시간 받아오기
+    setPauseVideo(true);
   };
 
   return (

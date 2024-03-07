@@ -18,3 +18,8 @@ export const playerState = atom<typeof YouTubePlayer>({
   key: "playerState",
   default: null,
 });
+
+export const pauseVideoState = atom<boolean>({
+  key: "pauseVideoState",
+  default: true,
+});

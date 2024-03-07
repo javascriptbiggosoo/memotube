@@ -1,7 +1,7 @@
-import React from "react";
-import YouTube, { YouTubeEvent } from "react-youtube";
-import { useRecoilValue } from "recoil";
-import { playerVarsState } from "../atoms/video";
+import React, { useEffect, useState } from "react";
+import YouTube, { YouTubeEvent, YouTubePlayer } from "react-youtube";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { pauseVideoState, playerVarsState } from "../atoms/video";
 
 interface Props {
   videoId: string;
@@ -9,8 +9,19 @@ interface Props {
 }
 
 export const YouTubeVideo = ({ videoId, onStateChange }: Props) => {
+  const [player, setPlayer] = useState<typeof YouTubePlayer>();
+  const [pauseVideo, setPauseVideo] = useRecoilState(pauseVideoState);
   const playerVars = useRecoilValue(playerVarsState);
-  // const setPlayer = useSetRecoilState(playerState);
+
+  useEffect(() => {
+    if (player && pauseVideo) {
+      player.pauseVideo();
+      setPauseVideo(false);
+    }
+  }, [pauseVideo]);
+  const handlePlayerReady = (event: YouTubeEvent) => {
+    setPlayer(event.target);
+  };
 
   const opts = {
     height: "540",
@@ -19,6 +30,11 @@ export const YouTubeVideo = ({ videoId, onStateChange }: Props) => {
   };
 
   return (
-    <YouTube videoId={videoId} opts={opts} onStateChange={onStateChange} />
+    <YouTube
+      videoId={videoId}
+      opts={opts}
+      onStateChange={onStateChange}
+      onReady={handlePlayerReady}
+    />
   );
 };
