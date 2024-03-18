@@ -1,5 +1,6 @@
 export default interface Memo {
-  time: string;
+  memoTime: string;
+  date: number;
   memoText: string;
   id: string;
 }

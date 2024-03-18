@@ -8,20 +8,21 @@ type FormValues = {
   memo: string;
 };
 interface MemoInputProps {
-  onMemoSubmit: (memo: string) => void;
+  onCreateMemo: (memo: string) => void;
   currentTime: string;
 }
 
 export default function MemoInput({
-  onMemoSubmit,
+  onCreateMemo,
   currentTime,
 }: MemoInputProps) {
   const { register, handleSubmit, setValue } = useForm<FormValues>();
   const setPauseVideo = useSetRecoilState(pauseVideoState);
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    onMemoSubmit(data.memo);
+    onCreateMemo(data.memo);
     setValue("memo", "");
+
     setPauseVideo(false);
   };
   const handleFocus = () => {

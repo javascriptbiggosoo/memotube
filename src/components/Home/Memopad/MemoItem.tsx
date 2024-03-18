@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Avatar,
   IconButton,
@@ -5,16 +6,17 @@ import {
   ListItemAvatar,
   ListItemText,
 } from "@mui/material";
-import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useSetRecoilState } from "recoil";
+
 import { playerVarsState } from "../../../atoms/video";
 import parseTimeToSeconds from "../../../utils/parseTimeToSeconds";
 
 interface MemoProps {
   time: string;
   memoText: string;
+  onUpdateMemo: (id: string, memoText: string) => void;
   onDeleteMemo: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -22,9 +24,13 @@ export default function MemoItem({
   time,
   memoText: memo,
   onDeleteMemo,
+  onUpdateMemo,
 }: MemoProps) {
   const setplayerVars = useSetRecoilState(playerVarsState);
 
+  const handleClick = () => {
+    onUpdateMemo("1", "수정된 메모입니다.");
+  };
   return (
     <ListItem
       style={{ cursor: "pointer" }}
@@ -40,7 +46,7 @@ export default function MemoItem({
         </IconButton>
       }
     >
-      <ListItemAvatar>
+      <ListItemAvatar onClick={handleClick}>
         <Avatar>
           <EditNoteIcon />
         </Avatar>
