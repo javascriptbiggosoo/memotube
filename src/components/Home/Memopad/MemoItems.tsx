@@ -19,6 +19,7 @@ export default function MemoItems({
       {memos.map((memo) => (
         <MemoItem
           key={memo.id}
+          id={memo.id}
           time={memo.memoTime}
           memoText={memo.memoText}
           onDeleteMemo={onDeleteMemo}

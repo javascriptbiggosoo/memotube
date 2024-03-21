@@ -32,7 +32,19 @@ export default function MemoPad({ currentTime }: MemoPadProps) {
   }
 
   function handleDeleteMemo() {}
-  function handleUpdateMemo() {}
+  function handleUpdateMemo(targetId: string, memoText: string) {
+    setMemos((prevMemos) =>
+      prevMemos.map((memo) => {
+        if (memo.id === targetId) {
+          return {
+            ...memo,
+            memoText,
+          };
+        }
+        return memo;
+      })
+    );
+  }
   return (
     <Section>
       <MemoInput currentTime={currentTime} onCreateMemo={handleMemoSubmit} />

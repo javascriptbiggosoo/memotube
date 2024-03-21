@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   IconButton,
+  Input,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -16,20 +17,24 @@ import parseTimeToSeconds from "../../../utils/parseTimeToSeconds";
 interface MemoProps {
   time: string;
   memoText: string;
+  id: string;
   onUpdateMemo: (id: string, memoText: string) => void;
   onDeleteMemo: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function MemoItem({
   time,
-  memoText: memo,
+  memoText,
   onDeleteMemo,
   onUpdateMemo,
+  id,
 }: MemoProps) {
+  const [isUpdating, setIsUpdating] = useState(false);
   const setplayerVars = useSetRecoilState(playerVarsState);
 
   const handleClick = () => {
-    onUpdateMemo("1", "수정된 메모입니다.");
+    // TODO: 메모 수정 활성
+    setIsUpdating((prev) => !prev);
   };
   return (
     <ListItem
@@ -52,7 +57,19 @@ export default function MemoItem({
         </Avatar>
       </ListItemAvatar>
 
-      <ListItemText primary={memo} secondary={time} />
+      {isUpdating ? (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            onUpdateMemo(id, memoText);
+            setIsUpdating(false);
+          }}
+        >
+          <Input type="text" value={memoText} />
+        </form>
+      ) : (
+        <ListItemText primary={memoText} secondary={time} />
+      )}
     </ListItem>
   );
 }
