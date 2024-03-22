@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   IconButton,
@@ -13,6 +13,7 @@ import { useSetRecoilState } from "recoil";
 
 import { playerVarsState } from "../../../atoms/video";
 import parseTimeToSeconds from "../../../utils/parseTimeToSeconds";
+import { useForm } from "react-hook-form";
 
 interface MemoProps {
   time: string;
@@ -21,6 +22,10 @@ interface MemoProps {
   onUpdateMemo: (id: string, memoText: string) => void;
   onDeleteMemo: (id: string) => void;
 }
+
+type FormValues = {
+  memoText: string;
+};
 
 export default function MemoItem({
   time,
@@ -31,14 +36,22 @@ export default function MemoItem({
 }: MemoProps) {
   const [isUpdating, setIsUpdating] = useState(false);
   const setplayerVars = useSetRecoilState(playerVarsState);
+  const { register, handleSubmit, setFocus } = useForm<FormValues>();
+
+  useEffect(() => {
+    if (isUpdating) {
+      setFocus("memoText");
+    }
+  }, [isUpdating, setFocus]);
+  // TODO: 인풋 value 초기화
 
   const handleEditClick = () => {
     setIsUpdating((prev) => !prev);
-    // TODO: 인풋 포커싱
   };
   const handleDeleteClick = () => {
     onDeleteMemo(id);
   };
+
   return (
     <ListItem
       style={{ cursor: "pointer" }}
@@ -62,13 +75,12 @@ export default function MemoItem({
 
       {isUpdating ? (
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            onUpdateMemo(id, memoText);
+          onSubmit={handleSubmit((data) => {
+            onUpdateMemo(id, data.memoText);
             setIsUpdating(false);
-          }}
+          })}
         >
-          <Input type="text" value={memoText} />
+          <Input {...register("memoText")} />
         </form>
       ) : (
         <ListItemText primary={memoText} secondary={time} />

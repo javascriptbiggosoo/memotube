@@ -11,8 +11,14 @@ interface MemoPadProps {
 export default function MemoPad({ currentTime }: MemoPadProps) {
   const [memos, setMemos] = useState<Memo[]>([
     {
-      memoTime: "00:00",
-      memoText: "등록된 메모입니다.",
+      memoTime: "44:23",
+      memoText: "아무 장수 챌린지",
+      id: "0",
+      date: new Date().getTime(),
+    },
+    {
+      memoTime: "1:27:32",
+      memoText: "메오대전",
       id: "1",
       date: new Date().getTime(),
     },
@@ -35,6 +41,7 @@ export default function MemoPad({ currentTime }: MemoPadProps) {
     setMemos((prevMemos) => prevMemos.filter((memo) => memo.id !== id));
   }
   function handleUpdateMemo(targetId: string, memoText: string) {
+    console.log(memoText);
     setMemos((prevMemos) =>
       prevMemos.map((memo) => {
         if (memo.id === targetId) {
