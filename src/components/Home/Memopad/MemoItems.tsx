@@ -6,7 +6,7 @@ import MemoItem from "./MemoItem";
 interface Props {
   memos: Memo[];
   onUpdateMemo: (id: string, memoText: string) => void;
-  onDeleteMemo: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onDeleteMemo: (id: string) => void;
 }
 
 export default function MemoItems({

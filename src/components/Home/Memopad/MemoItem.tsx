@@ -19,7 +19,7 @@ interface MemoProps {
   memoText: string;
   id: string;
   onUpdateMemo: (id: string, memoText: string) => void;
-  onDeleteMemo: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onDeleteMemo: (id: string) => void;
 }
 
 export default function MemoItem({
@@ -32,9 +32,12 @@ export default function MemoItem({
   const [isUpdating, setIsUpdating] = useState(false);
   const setplayerVars = useSetRecoilState(playerVarsState);
 
-  const handleClick = () => {
-    // TODO: 메모 수정 활성
+  const handleEditClick = () => {
     setIsUpdating((prev) => !prev);
+    // TODO: 인풋 포커싱
+  };
+  const handleDeleteClick = () => {
+    onDeleteMemo(id);
   };
   return (
     <ListItem
@@ -46,12 +49,12 @@ export default function MemoItem({
         });
       }}
       secondaryAction={
-        <IconButton edge="end" aria-label="delete" onClick={onDeleteMemo}>
+        <IconButton edge="end" aria-label="delete" onClick={handleDeleteClick}>
           <DeleteIcon />
         </IconButton>
       }
     >
-      <ListItemAvatar onClick={handleClick}>
+      <ListItemAvatar onClick={handleEditClick}>
         <Avatar>
           <EditNoteIcon />
         </Avatar>

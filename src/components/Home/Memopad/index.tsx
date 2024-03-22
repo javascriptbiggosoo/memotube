@@ -31,7 +31,9 @@ export default function MemoPad({ currentTime }: MemoPadProps) {
     ]);
   }
 
-  function handleDeleteMemo() {}
+  function handleDeleteMemo(id: string) {
+    setMemos((prevMemos) => prevMemos.filter((memo) => memo.id !== id));
+  }
   function handleUpdateMemo(targetId: string, memoText: string) {
     setMemos((prevMemos) =>
       prevMemos.map((memo) => {
