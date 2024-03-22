@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { YouTubeVideo } from "../components/YouTubeVideo";
+import { YouTubeVideo } from "../components/Home/YouTubeVideo";
 import VideoUrlInput from "../components/Home/VideoUrlInput";
 import MemoPad from "../components/Home/Memopad";
 import formatTime from "../utils/formatTime";
 import { YouTubeEvent } from "react-youtube";
 import { Container } from "@mui/material";
+import styled from "styled-components";
 
 export default function HomePage() {
   const [videoUrl, setVideoUrl] = useState("hnanNlDbsE4");
@@ -21,12 +22,14 @@ export default function HomePage() {
   }
 
   return (
-    <Container>
+    <HomePageContainer>
       {/* TODO: 펼치기 접기 */}
       <VideoUrlInput onUrlSubmit={showVideo} />
       <YouTubeVideo videoId={videoUrl} onStateChange={getCurrentTime} />
       <MemoPad currentTime={currentTime} />
       {/* TODO: 베스트 영상들 모음 추가 */}
-    </Container>
+    </HomePageContainer>
   );
 }
+
+const HomePageContainer = styled(Container)``;

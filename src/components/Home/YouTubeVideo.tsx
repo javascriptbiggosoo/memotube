@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import YouTube, { YouTubeEvent, YouTubePlayer } from "react-youtube";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { pauseVideoState, playerVarsState } from "../atoms/video";
+import { pauseVideoState, playerVarsState } from "../../atoms/video";
+import styled from "styled-components";
 
 interface Props {
   videoId: string;
@@ -30,7 +31,7 @@ export const YouTubeVideo = ({ videoId, onStateChange }: Props) => {
   };
 
   return (
-    <YouTube
+    <StlyedYouTube
       videoId={videoId}
       opts={opts}
       onStateChange={onStateChange}
@@ -38,3 +39,8 @@ export const YouTubeVideo = ({ videoId, onStateChange }: Props) => {
     />
   );
 };
+
+const StlyedYouTube = styled(YouTube)`
+  margin: 1rem auto;
+  text-align: center;
+`;
