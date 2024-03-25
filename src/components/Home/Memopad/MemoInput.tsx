@@ -27,6 +27,7 @@ export default function MemoInput({
   };
   const handleFocus = () => {
     setPauseVideo(true);
+    console.log("focus");
   };
 
   return (

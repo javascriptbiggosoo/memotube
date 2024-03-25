@@ -25,8 +25,9 @@ export const YouTubeVideo = ({ videoId, onStateChange }: Props) => {
   };
 
   const opts = {
-    height: "540",
-    width: "960",
+    // 16:9
+    width: "1088",
+    height: "612",
     playerVars,
   };
 
