@@ -1,13 +1,15 @@
 import { Box, Modal, Typography } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
+import ReactDOM from "react-dom";
 
 interface AboutModalProps {
   open: boolean;
 }
 
 export default function AboutModal({ open }: AboutModalProps) {
-  return (
+  // 모달을 body 태그 바로 아래에 렌더링
+  return ReactDOM.createPortal(
     <Modal
       open={open}
       // onClose={handleClose}
@@ -22,7 +24,8 @@ export default function AboutModal({ open }: AboutModalProps) {
           대충 스샷 설명 첨부첨부 다음페이지 슬라이드
         </Typography>
       </AboutModalBox>
-    </Modal>
+    </Modal>,
+    document.body
   );
 }
 
