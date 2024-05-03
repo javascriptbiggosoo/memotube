@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import { isLoggedInState } from "../../../atoms/user";
 import { useState } from "react";
 import AboutModal from "./AboutModal";
+import { Box } from "@mui/material";
 
 export default function Header() {
   const AuthPage = useMatch("/login");
@@ -17,8 +18,8 @@ export default function Header() {
   };
 
   return (
-    <Container>
-      <Nav>
+    <Container component="header">
+      <Nav component="nav">
         <Col>
           <Link to="/">메모튜브</Link>
         </Col>
@@ -60,30 +61,30 @@ export default function Header() {
   );
 }
 
-const Container = styled.header`
+const Container = styled(Box)`
   position: relative;
   align-items: center;
   width: 100vw;
   top: 0;
-  color: ${(props) => props.theme.black.darker};
+  color: ${({ theme }) => theme.black.darker};
   /* background-color: rgba(0, 0, 0, 0); */
   z-index: 999;
 `;
-const Nav = styled.nav`
+const Nav = styled(Box)`
   display: flex;
   justify-content: space-between;
   padding: 20px 60px;
 `;
-const Col = styled.div`
+const Col = styled(Box)`
   display: flex;
   align-items: center;
 `;
 
-const Items = styled.ul`
+const Items = styled(Box)`
   display: flex;
   align-items: center;
 `;
-const Item = styled.li`
+const Item = styled(Box)`
   margin-right: 20px;
   color: ${(props) => props.theme.black.lighter};
   transition: color 0.3s ease-in-out;

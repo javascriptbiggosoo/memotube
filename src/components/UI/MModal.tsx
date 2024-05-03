@@ -24,7 +24,7 @@ export default function MModal({ open, handleClose, children }: MModalProps) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          height: "100vh", // 전체 뷰포트 높이를 사용
+          height: "100vh",
         }}
       >
         <AboutModalBox>{children}</AboutModalBox>
