@@ -1,10 +1,5 @@
 import { Link, useMatch } from "react-router-dom";
-import {
-  motion,
-  useAnimation,
-  useMotionValueEvent,
-  useScroll,
-} from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 
@@ -12,28 +7,12 @@ import { isLoggedInState } from "../../../atoms/user";
 import { useState } from "react";
 import AboutModal from "./AboutModal";
 
-const NavVariants = {
-  top: { backgroundColor: "rgba(0,0,0,0)" },
-  scroll: { backgroundColor: "rgba(0,0,0,1)" },
-};
-
 export default function Header() {
-  const { scrollY } = useScroll();
   const navAnimation = useAnimation();
   const AuthPage = useMatch("/login");
   const ProfilePage = useMatch("/profile");
   const isLoggedIn = useRecoilValue(isLoggedInState);
   const [open, setOpen] = useState(false);
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    // console.log("Page scroll: ", scrollY);
-    if (latest > 0) {
-      navAnimation.start(NavVariants.scroll);
-    } else {
-      navAnimation.start(NavVariants.top);
-    }
-    // console.log("Page scroll: ", latest);
-  });
 
   const handleAboutClick = () => {
     setOpen((prev) => !prev);
@@ -51,7 +30,16 @@ export default function Header() {
         <Col>
           <Items>
             <Item onClick={handleAboutClick}>About</Item>
-            <AboutModal open={open} />
+            <AboutModal
+              open={open}
+              handleClose={(ev) => {
+                if (ev.target !== ev.currentTarget) return;
+                console.log("야");
+                setOpen(false);
+              }}
+            />
+            {/* <Item>둘러보기</Item> */}
+
             <Item>
               {isLoggedIn ? (
                 <Link
