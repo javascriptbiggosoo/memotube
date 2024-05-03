@@ -1,5 +1,4 @@
 import { Link, useMatch } from "react-router-dom";
-import { motion, useAnimation } from "framer-motion";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 
@@ -8,7 +7,6 @@ import { useState } from "react";
 import AboutModal from "./AboutModal";
 
 export default function Header() {
-  const navAnimation = useAnimation();
   const AuthPage = useMatch("/login");
   const ProfilePage = useMatch("/profile");
   const isLoggedIn = useRecoilValue(isLoggedInState);
@@ -20,15 +18,13 @@ export default function Header() {
 
   return (
     <Container>
-      <Nav
-        initial={{ backgroundColor: "rgba(0,0,0,0)" }}
-        animate={navAnimation}
-      >
+      <Nav>
         <Col>
           <Link to="/">메모튜브</Link>
         </Col>
         <Col>
           <Items>
+            <Item>demo</Item>
             <Item onClick={handleAboutClick}>About</Item>
             <AboutModal
               open={open}
@@ -73,7 +69,7 @@ const Container = styled.header`
   /* background-color: rgba(0, 0, 0, 0); */
   z-index: 999;
 `;
-const Nav = styled(motion.nav)`
+const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   padding: 20px 60px;
