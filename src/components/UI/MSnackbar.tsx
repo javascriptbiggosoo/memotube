@@ -1,6 +1,8 @@
 import React from "react";
 import { Snackbar, SnackbarContent, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { useRecoilValue } from "recoil";
+import { isDescState } from "../../atoms/desc";
 
 interface MSnackbarProps {
   message: string;
@@ -10,6 +12,7 @@ interface MSnackbarProps {
 
 // TODO: 설명 안보기 모드 제공
 const MSnackbar = ({ message, onSnackbarClose, open }: MSnackbarProps) => {
+  const isDesc = useRecoilValue(isDescState);
   const autoHideDuration = 6000;
 
   return (
@@ -18,7 +21,7 @@ const MSnackbar = ({ message, onSnackbarClose, open }: MSnackbarProps) => {
         vertical: "bottom",
         horizontal: "right",
       }}
-      open={open}
+      open={isDesc && open}
       autoHideDuration={autoHideDuration}
       onClose={onSnackbarClose}
     >

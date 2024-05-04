@@ -18,16 +18,14 @@ export default function HomePage() {
   function getCurrentTime(event: YouTubeEvent) {
     const time = event.target.getCurrentTime();
     setCurrentTime(formatTime(time));
-    console.log(time);
+    // console.log(time);
   }
 
   return (
     <HomePageContainer>
-      {/* TODO: 펼치기 접기 */}
       <VideoUrlInput onUrlSubmit={showVideo} />
       <YouTubeVideo videoId={videoUrl} onStateChange={getCurrentTime} />
       <MemoPad currentTime={currentTime} />
-      {/* TODO: 베스트 영상들 모음 추가 */}
     </HomePageContainer>
   );
 }

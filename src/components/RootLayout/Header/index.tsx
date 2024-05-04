@@ -1,30 +1,48 @@
 import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import { isLoggedInState } from "../../../atoms/user";
 import { useState } from "react";
 import AboutModal from "./AboutModal";
-import { Box } from "@mui/material";
+import { Box, FormControlLabel, Switch } from "@mui/material";
+import { isDescState } from "../../../atoms/desc";
 
 export default function Header() {
+  const [isDesc, setIsDesc] = useRecoilState(isDescState);
+  const [open, setOpen] = useState(false);
+  const isLoggedIn = useRecoilValue(isLoggedInState);
   const AuthPage = useMatch("/login");
   const ProfilePage = useMatch("/profile");
-  const isLoggedIn = useRecoilValue(isLoggedInState);
-  const [open, setOpen] = useState(false);
 
   const handleAboutClick = () => {
     setOpen((prev) => !prev);
+  };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsDesc(event.target.checked);
   };
 
   return (
     <Container component="header">
       <Nav component="nav">
         <Col>
-          <Link to="/">메모튜브</Link>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={isDesc}
+                onChange={handleChange}
+                color="primary"
+              />
+            }
+            label="설명 ON/OFF"
+          />
         </Col>
+        <Col>Memotube</Col>
         <Col>
           <Items>
+            <Item>
+              <Link to="/">Home</Link>
+            </Item>
             <Item>
               <Link to="/demo">Demo</Link>
             </Item>
