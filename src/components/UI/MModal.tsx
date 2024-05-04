@@ -18,7 +18,12 @@ export default function MModal({ open, handleClose, children }: MModalProps) {
       aria-describedby="modal-modal-description"
     >
       <Box
-        onClick={handleClose}
+        onClick={(event) => {
+          // Box 자체 클릭 이벤트를 차단하지 않도록 수정
+          if (event.currentTarget === event.target) {
+            handleClose(event);
+          }
+        }}
         // 가운데 정렬용 스타일
         sx={{
           display: "flex",
@@ -27,18 +32,20 @@ export default function MModal({ open, handleClose, children }: MModalProps) {
           height: "100vh",
         }}
       >
-        <AboutModalBox>{children}</AboutModalBox>
+        <ModalBox>{children}</ModalBox>
       </Box>
     </Modal>
   );
 }
 
-const AboutModalBox = styled(Box)`
-  display: "flex";
-  align-items: "center";
-  justify-content: "center";
-  width: 400px;
-  border: "2px solid #000";
-  box-shadow: 24;
+const ModalBox = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 640px;
+  box-shadow: 24px;
   background-color: white;
+  padding: 20px;
+  border-radius: 10px;
 `;

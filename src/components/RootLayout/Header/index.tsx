@@ -29,9 +29,7 @@ export default function Header() {
             <Item onClick={handleAboutClick}>About</Item>
             <AboutModal
               open={open}
-              handleClose={(ev) => {
-                if (ev.target !== ev.currentTarget) return;
-                console.log("야");
+              handleClose={() => {
                 setOpen(false);
               }}
             />
