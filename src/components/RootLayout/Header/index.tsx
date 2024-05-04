@@ -61,17 +61,21 @@ export default function Header() {
 
 const Container = styled(Box)`
   position: relative;
+  display: flex;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   top: 0;
   color: ${({ theme }) => theme.black.darker};
   /* background-color: rgba(0, 0, 0, 0); */
   z-index: 999;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 `;
 const Nav = styled(Box)`
   display: flex;
   justify-content: space-between;
   padding: 20px 60px;
+  width: 100%;
 `;
 const Col = styled(Box)`
   display: flex;
@@ -90,8 +94,4 @@ const Item = styled(Box)`
     color: ${(props) => props.theme.black.darker};
     cursor: pointer;
   }
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
 `;
