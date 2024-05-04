@@ -25,7 +25,9 @@ export default function Header() {
         </Col>
         <Col>
           <Items>
-            <Item>demo</Item>
+            <Item>
+              <Link to="/demo">Demo</Link>
+            </Item>
             <Item onClick={handleAboutClick}>About</Item>
             <AboutModal
               open={open}

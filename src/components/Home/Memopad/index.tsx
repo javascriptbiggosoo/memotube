@@ -3,6 +3,7 @@ import MemoInput from "./MemoInput";
 import Memo from "../../../types/memo";
 import styled from "styled-components";
 import MemoItems from "./MemoItems";
+import { Box } from "@mui/material";
 
 interface MemoPadProps {
   currentTime: string;
@@ -26,15 +27,19 @@ export default function MemoPad({ currentTime }: MemoPadProps) {
 
   function handleMemoSubmit(memoText: string) {
     if (!memoText) return;
-    setMemos((prevMemos) => [
-      ...prevMemos,
-      {
-        id: crypto.randomUUID(),
-        date: new Date().getTime(),
-        memoTime: currentTime,
-        memoText,
-      },
-    ]);
+    setMemos((prevMemos) => {
+      const dateTime = new Date().getTime();
+
+      return [
+        ...prevMemos,
+        {
+          id: currentTime + dateTime,
+          date: dateTime,
+          memoTime: currentTime,
+          memoText,
+        },
+      ];
+    });
   }
 
   function handleDeleteMemo(id: string) {
@@ -55,7 +60,7 @@ export default function MemoPad({ currentTime }: MemoPadProps) {
     );
   }
   return (
-    <Section>
+    <Section component="section">
       <MemoInput currentTime={currentTime} onCreateMemo={handleMemoSubmit} />
       <MemoItems
         memos={memos}
@@ -66,7 +71,7 @@ export default function MemoPad({ currentTime }: MemoPadProps) {
   );
 }
 
-const Section = styled.section`
+const Section = styled(Box)`
   padding: 20px;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
