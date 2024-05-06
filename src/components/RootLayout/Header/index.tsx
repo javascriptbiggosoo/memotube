@@ -10,15 +10,15 @@ import { isDescState } from "../../../atoms/desc";
 
 export default function Header() {
   const [isDesc, setIsDesc] = useRecoilState(isDescState);
-  const [open, setOpen] = useState(false);
+  const [openHowTo, setOpenHowTo] = useState(false);
   const isLoggedIn = useRecoilValue(isLoggedInState);
   const AuthPage = useMatch("/login");
   const ProfilePage = useMatch("/profile");
 
   const handleAboutClick = () => {
-    setOpen((prev) => !prev);
+    setOpenHowTo((prev) => !prev);
   };
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsDesc(event.target.checked);
   };
 
@@ -30,27 +30,29 @@ export default function Header() {
             control={
               <Switch
                 checked={isDesc}
-                onChange={handleChange}
+                onChange={handleSwitchChange}
                 color="primary"
               />
             }
-            label="설명 ON/OFF"
+            label={isDesc ? "설명 ON" : "설명 OFF"}
           />
         </Col>
-        <Col>Memotube</Col>
+        <Col>
+          <Link to="/">
+            {/* TODO: 서브셋폰트 */}
+            Memotube
+          </Link>
+        </Col>
         <Col>
           <Items>
             <Item>
-              <Link to="/">Home</Link>
+              <Link to="/demo">데모</Link>
             </Item>
-            <Item>
-              <Link to="/demo">Demo</Link>
-            </Item>
-            <Item onClick={handleAboutClick}>About</Item>
+            <Item onClick={handleAboutClick}>사용법</Item>
             <AboutModal
-              open={open}
+              open={openHowTo}
               handleClose={() => {
-                setOpen(false);
+                setOpenHowTo(false);
               }}
             />
             {/* <Item>둘러보기</Item> */}
@@ -98,6 +100,7 @@ const Nav = styled(Box)`
   width: 100%;
 `;
 const Col = styled(Box)`
+  min-width: 140px; // 설명 온오프 스위치 너비 고려
   display: flex;
   align-items: center;
 `;

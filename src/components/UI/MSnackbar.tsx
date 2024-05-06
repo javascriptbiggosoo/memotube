@@ -10,7 +10,6 @@ interface MSnackbarProps {
   onSnackbarClose: () => void;
 }
 
-// TODO: 설명 안보기 모드 제공
 const MSnackbar = ({ message, onSnackbarClose, open }: MSnackbarProps) => {
   const isDesc = useRecoilValue(isDescState);
   const autoHideDuration = 6000;

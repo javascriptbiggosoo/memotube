@@ -31,7 +31,7 @@ export default function DemoPage() {
       <MemoPad currentTime={currentTime} />
       {/* TODO: 베스트 영상들 모음 추가 */}
       <MSnackbar
-        message="사용 방식 이해를 돕기 위해 더미 데이터를 포함한 페이지입니다."
+        message="사용 이해를 돕기 위해 더미 데이터를 포함시킨 페이지입니다."
         open={isSnbOpen}
         onSnackbarClose={() => {
           setIsSnbOpen(false);
