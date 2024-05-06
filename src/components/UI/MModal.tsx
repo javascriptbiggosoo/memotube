@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Modal } from "@mui/material";
+import { Box, IconButton, Modal } from "@mui/material";
 import styled from "styled-components";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface MModalProps {
   open: boolean;
@@ -17,7 +18,7 @@ export default function MModal({ open, handleClose, children }: MModalProps) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box
+      <ModalBackdrop
         onClick={(event) => {
           // Box 자체 클릭 이벤트를 차단하지 않도록 수정
           if (event.currentTarget === event.target) {
@@ -25,20 +26,35 @@ export default function MModal({ open, handleClose, children }: MModalProps) {
           }
         }}
         // 가운데 정렬용 스타일
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
       >
-        <ModalBox>{children}</ModalBox>
-      </Box>
+        <ModalBox>
+          <IconButton
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+            }}
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>
+          {children}
+        </ModalBox>
+      </ModalBackdrop>
     </Modal>
   );
 }
 
+const ModalBackdrop = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+`;
+
 const ModalBox = styled(Box)`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
