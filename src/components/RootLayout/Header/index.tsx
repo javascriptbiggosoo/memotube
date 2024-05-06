@@ -1,22 +1,26 @@
+import { useState } from "react";
+import { Box, FormControlLabel, Switch } from "@mui/material";
 import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 import { isLoggedInState } from "../../../atoms/user";
-import { useState } from "react";
 import AboutModal from "./AboutModal";
-import { Box, FormControlLabel, Switch } from "@mui/material";
 import { isDescState } from "../../../atoms/desc";
+import AuthModal from "./AuthModal";
 
 export default function Header() {
   const [isDesc, setIsDesc] = useRecoilState(isDescState);
-  const [openHowTo, setOpenHowTo] = useState(false);
   const isLoggedIn = useRecoilValue(isLoggedInState);
-  const AuthPage = useMatch("/login");
+  const [openHowTo, setOpenHowTo] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
   const ProfilePage = useMatch("/profile");
 
   const handleAboutClick = () => {
     setOpenHowTo((prev) => !prev);
+  };
+  const handleLoginClick = () => {
+    setOpenLogin((prev) => !prev);
   };
   const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsDesc(event.target.checked);
@@ -57,23 +61,24 @@ export default function Header() {
             />
             {/* <Item>둘러보기</Item> */}
 
-            <Item>
-              {isLoggedIn ? (
+            {isLoggedIn ? (
+              <Item>
                 <Link
                   to="/profile"
                   style={{ fontWeight: ProfilePage ? "bold" : "normal" }}
                 >
                   내 프로필
-                </Link>
-              ) : (
-                <Link
-                  to="/login"
-                  style={{ fontWeight: AuthPage ? "bold" : "normal" }}
-                >
-                  로그인
-                </Link>
-              )}
-            </Item>
+                </Link>{" "}
+              </Item>
+            ) : (
+              <Item onClick={handleLoginClick}>로그인</Item>
+            )}
+            <AuthModal
+              open={openLogin}
+              handleClose={() => {
+                setOpenLogin(false);
+              }}
+            />
           </Items>
         </Col>
       </Nav>
