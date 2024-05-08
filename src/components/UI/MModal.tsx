@@ -20,12 +20,10 @@ export default function MModal({ open, handleClose, children }: MModalProps) {
     >
       <ModalBackdrop
         onClick={(event) => {
-          // Box 자체 클릭 이벤트를 차단하지 않도록 수정
           if (event.currentTarget === event.target) {
             handleClose(event);
           }
         }}
-        // 가운데 정렬용 스타일
       >
         <ModalBox>
           <IconButton
