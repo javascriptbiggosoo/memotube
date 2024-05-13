@@ -3,6 +3,7 @@ import RootLayout from "./pages/layout";
 import HomePage from "./pages";
 import ProfilePage from "./pages/Profile";
 import DemoPage from "./pages/Demo";
+import BoardPage from "./pages/Board";
 
 const router = createBrowserRouter(
   [
@@ -13,6 +14,7 @@ const router = createBrowserRouter(
         { path: "/", element: <HomePage /> },
         { path: "/profile", element: <ProfilePage /> },
         { path: "/demo", element: <DemoPage /> },
+        { path: "/board", element: <BoardPage /> },
       ],
     },
   ],

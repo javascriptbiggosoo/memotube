@@ -3,6 +3,7 @@ import YouTube, { YouTubeEvent, YouTubePlayer } from "react-youtube";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { pauseVideoState, playerVarsState } from "../../atoms/video";
 import styled from "styled-components";
+import { Container } from "@mui/material";
 
 interface Props {
   videoId: string;
@@ -20,28 +21,41 @@ export const YouTubeVideo = ({ videoId, onStateChange }: Props) => {
       setPauseVideo(false);
     }
   }, [pauseVideo]);
+
   const handlePlayerReady = (event: YouTubeEvent) => {
     setPlayer(event.target);
   };
 
   const opts = {
-    // 16:9
-    width: "1088",
-    height: "612",
     playerVars,
+    width: "100%",
+    height: "100%",
   };
 
   return (
-    <StlyedYouTube
-      videoId={videoId}
-      opts={opts}
-      onStateChange={onStateChange}
-      onReady={handlePlayerReady}
-    />
+    <VideoContainer>
+      <YouTube
+        videoId={videoId}
+        opts={opts}
+        onStateChange={onStateChange}
+        onReady={handlePlayerReady}
+      />
+    </VideoContainer>
   );
 };
 
-const StlyedYouTube = styled(YouTube)`
+const VideoContainer = styled(Container)`
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
   margin: 1rem auto;
   text-align: center;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 `;

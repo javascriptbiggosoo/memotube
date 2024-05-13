@@ -28,7 +28,7 @@ export default function VideoUrlInput({ onUrlSubmit }: VideoUrlInputProps) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextField
         id="url-input"
-        label="Video URL"
+        label="영상 URL"
         variant="filled"
         color="primary"
         {...register("url")}

@@ -27,7 +27,7 @@ export default function Header() {
   };
 
   return (
-    <Container component="header">
+    <HeaderContainer component="header">
       <Nav component="nav">
         <Col>
           <FormControlLabel
@@ -49,10 +49,15 @@ export default function Header() {
         </Col>
         <Col>
           <Items>
-            <Item>
+            <Item sx={{ color: "gray" }}>
               <Link to="/demo">데모</Link>
             </Item>
-            <Item onClick={handleAboutClick}>사용법</Item>
+            <Item onClick={handleAboutClick} sx={{ color: "gray" }}>
+              사용법
+            </Item>
+            <Item>
+              <Link to="/board">게시판</Link>
+            </Item>
             <AboutModal
               open={openHowTo}
               handleClose={() => {
@@ -82,11 +87,11 @@ export default function Header() {
           </Items>
         </Col>
       </Nav>
-    </Container>
+    </HeaderContainer>
   );
 }
 
-const Container = styled(Box)`
+const HeaderContainer = styled(Box)`
   position: relative;
   display: flex;
   align-items: center;
@@ -96,16 +101,14 @@ const Container = styled(Box)`
   /* background-color: rgba(0, 0, 0, 0); */
   z-index: 999;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
 `;
 const Nav = styled(Box)`
   display: flex;
   justify-content: space-between;
-  padding: 20px 60px;
+  padding: 16px 38px;
   width: 100%;
 `;
 const Col = styled(Box)`
-  min-width: 140px; // 설명 온오프 스위치 너비 고려
   display: flex;
   align-items: center;
 `;
