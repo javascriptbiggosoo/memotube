@@ -4,9 +4,9 @@ import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 
-import { isLoggedInState } from "../../../atoms/user";
+import { isLoggedInState } from "../../../atoms/userAtoms";
 import AboutModal from "./AboutModal";
-import { isDescState } from "../../../atoms/desc";
+import { isDescState } from "../../../atoms/descAtoms";
 import AuthModal from "./AuthModal";
 
 export default function Header() {
@@ -14,7 +14,9 @@ export default function Header() {
   const isLoggedIn = useRecoilValue(isLoggedInState);
   const [openHowTo, setOpenHowTo] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
-  const ProfilePage = useMatch("/profile");
+  const matchProfile = useMatch("/profile");
+  const matchBoard = useMatch("/board");
+  const matchDemo = useMatch("/demo");
 
   const handleAboutClick = () => {
     setOpenHowTo((prev) => !prev);
@@ -49,14 +51,22 @@ export default function Header() {
         </Col>
         <Col>
           <Items>
-            <Item sx={{ color: "gray" }}>
-              <Link to="/demo">데모</Link>
-            </Item>
-            <Item onClick={handleAboutClick} sx={{ color: "gray" }}>
-              사용법
-            </Item>
             <Item>
-              <Link to="/board">게시판</Link>
+              <Link
+                to="/demo"
+                style={{ fontWeight: matchDemo ? "bold" : "normal" }}
+              >
+                데모
+              </Link>
+            </Item>
+
+            <Item>
+              <Link
+                to="/board"
+                style={{ fontWeight: matchBoard ? "bold" : "normal" }}
+              >
+                게시판
+              </Link>
             </Item>
             <AboutModal
               open={openHowTo}
@@ -64,13 +74,11 @@ export default function Header() {
                 setOpenHowTo(false);
               }}
             />
-            {/* <Item>둘러보기</Item> */}
-
             {isLoggedIn ? (
               <Item>
                 <Link
                   to="/profile"
-                  style={{ fontWeight: ProfilePage ? "bold" : "normal" }}
+                  style={{ fontWeight: matchProfile ? "bold" : "normal" }}
                 >
                   내 프로필
                 </Link>{" "}
@@ -78,6 +86,7 @@ export default function Header() {
             ) : (
               <Item onClick={handleLoginClick}>로그인</Item>
             )}
+            <Item onClick={handleAboutClick}>사용법</Item>
             <AuthModal
               open={openLogin}
               handleClose={() => {
@@ -119,7 +128,7 @@ const Items = styled(Box)`
 `;
 const Item = styled(Box)`
   margin-right: 20px;
-  color: ${(props) => props.theme.black.lighter};
+  color: gray;
   transition: color 0.3s ease-in-out;
   &:hover {
     color: ${(props) => props.theme.black.darker};

@@ -17,5 +17,5 @@ export default function formatTime(seconds: number | string) {
 }
 
 // 예시 출력
-console.log(formatTime(125)); // "02:05"
-console.log(formatTime(3665)); // "01:01:05"
+// console.log(formatTime(125)); // "02:05"
+// console.log(formatTime(3665)); // "01:01:05"

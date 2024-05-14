@@ -11,7 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useSetRecoilState } from "recoil";
 
-import { playerVarsState } from "../../../atoms/video";
+import { playerVarsState } from "../../../atoms/videoPlayerAtoms";
 import parseTimeToSeconds from "../../../utils/parseTimeToSeconds";
 import { useForm } from "react-hook-form";
 

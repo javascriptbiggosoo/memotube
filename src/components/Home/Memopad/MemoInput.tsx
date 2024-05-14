@@ -2,7 +2,7 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, TextField } from "@mui/material";
 import { useSetRecoilState } from "recoil";
-import { pauseVideoState } from "../../../atoms/video";
+import { pauseVideoState } from "../../../atoms/videoPlayerAtoms";
 
 type FormValues = {
   memo: string;

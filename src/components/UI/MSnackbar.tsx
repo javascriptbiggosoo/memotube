@@ -2,7 +2,7 @@ import React from "react";
 import { Snackbar, SnackbarContent, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useRecoilValue } from "recoil";
-import { isDescState } from "../../atoms/desc";
+import { isDescState } from "../../atoms/descAtoms";
 
 interface MSnackbarProps {
   message: string;

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import YouTube, { YouTubeEvent, YouTubePlayer } from "react-youtube";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { pauseVideoState, playerVarsState } from "../../atoms/video";
 import styled from "styled-components";
 import { Container } from "@mui/material";
+import { pauseVideoState, playerVarsState } from "../../atoms/videoPlayerAtoms";
 
 interface Props {
   videoId: string;

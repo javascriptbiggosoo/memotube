@@ -3,7 +3,7 @@ import RootLayout from "./pages/layout";
 import HomePage from "./pages";
 import ProfilePage from "./pages/Profile";
 import DemoPage from "./pages/Demo";
-import BoardPage from "./pages/Board";
+import { BoardPage } from "./pages/Board";
 
 const router = createBrowserRouter(
   [

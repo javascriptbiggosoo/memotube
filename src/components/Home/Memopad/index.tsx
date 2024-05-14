@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import MemoInput from "./MemoInput";
-import Memo from "../../../types/memo";
 import styled from "styled-components";
 import MemoItems from "./MemoItems";
 import { Box } from "@mui/material";
+import Memo from "../../../atoms/videoMemoAtoms";
 
 interface MemoPadProps {
   currentTime: string;
 }
 
 export default function MemoPad({ currentTime }: MemoPadProps) {
+  // TODO: 아톰으로 옮기기
   const [memos, setMemos] = useState<Memo[]>([
     {
       memoTime: "44:23",
