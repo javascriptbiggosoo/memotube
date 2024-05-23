@@ -19,8 +19,8 @@ interface MemoProps {
   time: string;
   memoText: string;
   id: string;
-  onUpdateMemo: (id: string, memoText: string) => void;
-  onDeleteMemo: (id: string) => void;
+  onUpdateMemo?: (id: string, memoText: string) => void;
+  onDeleteMemo?: (id: string) => void;
 }
 
 type FormValues = {
@@ -43,13 +43,12 @@ export default function MemoItem({
       setFocus("memoText");
     }
   }, [isUpdating, setFocus]);
-  // TODO: 인풋 value 초기화
 
   const handleEditClick = () => {
     setIsUpdating((prev) => !prev);
   };
   const handleDeleteClick = () => {
-    onDeleteMemo(id);
+    onDeleteMemo && onDeleteMemo(id);
   };
 
   return (
@@ -62,21 +61,29 @@ export default function MemoItem({
         });
       }}
       secondaryAction={
-        <IconButton edge="end" aria-label="delete" onClick={handleDeleteClick}>
-          <DeleteIcon />
-        </IconButton>
+        onDeleteMemo ? (
+          <IconButton
+            edge="end"
+            aria-label="delete"
+            onClick={handleDeleteClick}
+          >
+            <DeleteIcon />
+          </IconButton>
+        ) : null
       }
     >
-      <ListItemAvatar onClick={handleEditClick}>
-        <Avatar>
-          <EditNoteIcon />
-        </Avatar>
-      </ListItemAvatar>
+      {onUpdateMemo && (
+        <ListItemAvatar onClick={handleEditClick}>
+          <Avatar>
+            <EditNoteIcon />
+          </Avatar>
+        </ListItemAvatar>
+      )}
 
       {isUpdating ? (
         <form
           onSubmit={handleSubmit((data) => {
-            onUpdateMemo(id, data.memoText);
+            onUpdateMemo && onUpdateMemo(id, data.memoText);
             setIsUpdating(false);
           })}
         >

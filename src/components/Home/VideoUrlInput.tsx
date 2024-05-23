@@ -15,6 +15,8 @@ export default function VideoUrlInput({ onUrlSubmit }: VideoUrlInputProps) {
   const { register, handleSubmit, setValue } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
+    // TODO: 이전 메모 비우기
+    // TODO: 이전 메모 비워지는거 경고창으로 물어보기
     const url = extractYouTubeID(data.url);
     if (url) {
       onUrlSubmit(url);

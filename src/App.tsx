@@ -2,8 +2,9 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import RootLayout from "./pages/layout";
 import HomePage from "./pages";
 import ProfilePage from "./pages/Profile";
-import DemoPage from "./pages/Demo";
 import { BoardPage } from "./pages/Board";
+import PostPage from "./pages/Board/Post";
+import MylistPage from "./pages/Mylist";
 
 const router = createBrowserRouter(
   [
@@ -13,8 +14,15 @@ const router = createBrowserRouter(
       children: [
         { path: "/", element: <HomePage /> },
         { path: "/profile", element: <ProfilePage /> },
-        { path: "/demo", element: <DemoPage /> },
-        { path: "/board", element: <BoardPage /> },
+        { path: "/mylist", element: <MylistPage /> },
+        {
+          path: "/board",
+          element: <BoardPage />,
+        },
+        {
+          path: "/board/:postId",
+          element: <PostPage />,
+        },
       ],
     },
   ],

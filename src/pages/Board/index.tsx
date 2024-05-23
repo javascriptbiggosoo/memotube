@@ -38,6 +38,9 @@ export const BoardPage = () => {
 };
 
 const StyledTableContainer = styled(TableContainer)`
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #f5f5f5;
   max-width: 800px;
   margin: auto;
   margin-top: 2rem;

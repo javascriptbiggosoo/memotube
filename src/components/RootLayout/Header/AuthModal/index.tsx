@@ -19,6 +19,10 @@ export default function AuthModal({ open, handleClose }: AuthModalProps) {
 
       <LoginForm mode={isLogin ? "login" : "register"} />
 
+      <Typography sx={{ mt: 2, color: "grey" }}>
+        비밀번호는 6자 이상입니다.
+      </Typography>
+
       <Typography textAlign="center" sx={{ mt: 2 }}>
         {isLogin ? "계정이 없으신가요? " : "계정이 있으신가요?"}
         <Typography

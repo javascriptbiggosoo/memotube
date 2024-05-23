@@ -1,12 +1,12 @@
 import { List } from "@mui/material";
 import React from "react";
-import Memo from "../../../types/memo";
 import MemoItem from "./MemoItem";
+import { IMemo } from "../../../types";
 
 interface Props {
-  memos: Memo[];
-  onUpdateMemo: (id: string, memoText: string) => void;
-  onDeleteMemo: (id: string) => void;
+  memos: IMemo[];
+  onUpdateMemo?: (id: string, memoText: string) => void;
+  onDeleteMemo?: (id: string) => void;
 }
 
 export default function MemoItems({

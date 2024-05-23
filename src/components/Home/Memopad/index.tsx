@@ -3,7 +3,7 @@ import MemoInput from "./MemoInput";
 import styled from "styled-components";
 import MemoItems from "./MemoItems";
 import { Box } from "@mui/material";
-import Memo from "../../../atoms/videoMemoAtoms";
+import { IMemo } from "../../../types";
 
 interface MemoPadProps {
   currentTime: string;
@@ -11,18 +11,18 @@ interface MemoPadProps {
 
 export default function MemoPad({ currentTime }: MemoPadProps) {
   // TODO: 아톰으로 옮기기
-  const [memos, setMemos] = useState<Memo[]>([
+  const [memos, setMemos] = useState<IMemo[]>([
     {
       memoTime: "44:23",
       memoText: "아무 장수 챌린지",
       id: "0",
-      date: new Date().getTime(),
+      createdAt: new Date().getTime(),
     },
     {
-      memoTime: "1:27:32",
+      memoTime: "1:27:22",
       memoText: "메오대전",
       id: "1",
-      date: new Date().getTime(),
+      createdAt: new Date().getTime(),
     },
   ]);
 
@@ -34,8 +34,8 @@ export default function MemoPad({ currentTime }: MemoPadProps) {
       return [
         ...prevMemos,
         {
-          id: currentTime + dateTime,
-          date: dateTime,
+          id: crypto.randomUUID(),
+          createdAt: dateTime,
           memoTime: currentTime,
           memoText,
         },

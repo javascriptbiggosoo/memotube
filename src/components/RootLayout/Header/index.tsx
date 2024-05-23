@@ -1,65 +1,65 @@
 import { useState } from "react";
-import { Box, FormControlLabel, Switch } from "@mui/material";
+import { Box } from "@mui/material";
 import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 
 import { isLoggedInState } from "../../../atoms/userAtoms";
-import AboutModal from "./AboutModal";
-import { isDescState } from "../../../atoms/descAtoms";
+// import AboutModal from "./AboutModal";
 import AuthModal from "./AuthModal";
 
 export default function Header() {
-  const [isDesc, setIsDesc] = useRecoilState(isDescState);
   const isLoggedIn = useRecoilValue(isLoggedInState);
-  const [openHowTo, setOpenHowTo] = useState(false);
+  // const [openHowTo, setOpenHowTo] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const matchProfile = useMatch("/profile");
   const matchBoard = useMatch("/board");
-  const matchDemo = useMatch("/demo");
+  const matchMylist = useMatch("/mylist");
 
-  const handleAboutClick = () => {
-    setOpenHowTo((prev) => !prev);
-  };
+  // const handleAboutClick = () => {
+  //   setOpenHowTo((prev) => !prev);
+  // };
   const handleLoginClick = () => {
     setOpenLogin((prev) => !prev);
-  };
-  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsDesc(event.target.checked);
   };
 
   return (
     <HeaderContainer component="header">
       <Nav component="nav">
         <Col>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={isDesc}
-                onChange={handleSwitchChange}
-                color="primary"
-              />
-            }
-            label={isDesc ? "설명 ON" : "설명 OFF"}
-          />
-        </Col>
-        <Col>
           <Link to="/">
-            {/* TODO: 서브셋폰트 */}
-            Memotube
+            <svg
+              width="200"
+              height="50"
+              viewBox="0 0 200 50"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0"
+                y="0"
+                width="200"
+                height="50"
+                rx="10"
+                ry="10"
+                fill="#87CEEB"
+              />
+
+              <polygon points="15,10 15,40 40,25" fill="#ffffff" />
+
+              <text
+                x="50"
+                y="32"
+                font-family="Arial, sans-serif"
+                font-size="24"
+                fill="#ffffff"
+              >
+                MemoTube
+              </text>
+            </svg>
           </Link>
         </Col>
         <Col>
           <Items>
-            <Item>
-              <Link
-                to="/demo"
-                style={{ fontWeight: matchDemo ? "bold" : "normal" }}
-              >
-                데모
-              </Link>
-            </Item>
-
             <Item>
               <Link
                 to="/board"
@@ -68,12 +68,20 @@ export default function Header() {
                 게시판
               </Link>
             </Item>
-            <AboutModal
+            <Item>
+              <Link
+                to="/mylist"
+                style={{ fontWeight: matchMylist ? "bold" : "normal" }}
+              >
+                내 메모튜브
+              </Link>
+            </Item>
+            {/* <AboutModal
               open={openHowTo}
               handleClose={() => {
                 setOpenHowTo(false);
               }}
-            />
+            /> */}
             {isLoggedIn ? (
               <Item>
                 <Link
@@ -86,7 +94,7 @@ export default function Header() {
             ) : (
               <Item onClick={handleLoginClick}>로그인</Item>
             )}
-            <Item onClick={handleAboutClick}>사용법</Item>
+            {/* <Item onClick={handleAboutClick}>사용법</Item> */}
             <AuthModal
               open={openLogin}
               handleClose={() => {
@@ -121,7 +129,6 @@ const Col = styled(Box)`
   display: flex;
   align-items: center;
 `;
-
 const Items = styled(Box)`
   display: flex;
   align-items: center;
