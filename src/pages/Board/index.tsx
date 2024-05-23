@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import styled from "styled-components";
 import { videoPostsState } from "../../atoms/videoPostAtoms";
+import BoardItem from "../../components/Board/BoardItem";
 
 export const BoardPage = () => {
   const videoPosts = useRecoilValue(videoPostsState);
@@ -28,16 +29,7 @@ export const BoardPage = () => {
         </TableHead>
         <TableBody>
           {videoPosts.map((post) => (
-            // TODO: 컴포넌트로 빼자
-            <TableRow key={post.id}>
-              <ImageCell onClick={() => window.open(post.videoId, "_blank")}>
-                <img src={post.thumbnail} alt={post.title} />
-              </ImageCell>
-              <TableCell>{post.title}</TableCell>
-              <TableCell>{post.userId}</TableCell>
-              <TableCell>{post.createdAt}</TableCell>
-              <TableCell>{post.likes}</TableCell>
-            </TableRow>
+            <BoardItem key={post.id} post={post} />
           ))}
         </TableBody>
       </Table>
@@ -49,14 +41,6 @@ const StyledTableContainer = styled(TableContainer)`
   max-width: 800px;
   margin: auto;
   margin-top: 2rem;
-`;
-
-const ImageCell = styled(TableCell)`
-  cursor: pointer;
-  img {
-    width: 100px;
-    height: auto;
-  }
 `;
 
 const CustomTableCell = styled(TableCell)<{ width: string }>`
