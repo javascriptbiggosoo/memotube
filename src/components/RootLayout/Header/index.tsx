@@ -110,6 +110,7 @@ export default function Header() {
 
 const HeaderContainer = styled(Box)`
   position: relative;
+  min-width: 800px;
   display: flex;
   align-items: center;
   width: 100%;

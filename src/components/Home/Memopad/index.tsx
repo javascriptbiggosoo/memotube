@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import MemoInput from "./MemoInput";
 import styled from "styled-components";
 import MemoItems from "./MemoItems";
@@ -7,27 +7,18 @@ import { IMemo } from "../../../types";
 
 interface MemoPadProps {
   currentTime: string;
+  memos?: IMemo[];
+  setMemos?: React.Dispatch<React.SetStateAction<IMemo[]>>;
 }
 
-export default function MemoPad({ currentTime }: MemoPadProps) {
-  // TODO: 아톰으로 옮기기
-  const [memos, setMemos] = useState<IMemo[]>([
-    {
-      memoTime: "44:23",
-      memoText: "아무 장수 챌린지",
-      id: "0",
-      createdAt: new Date().getTime(),
-    },
-    {
-      memoTime: "1:27:22",
-      memoText: "메오대전",
-      id: "1",
-      createdAt: new Date().getTime(),
-    },
-  ]);
-
+export default function MemoPad({
+  currentTime,
+  memos,
+  setMemos,
+}: MemoPadProps) {
   function handleMemoSubmit(memoText: string) {
     if (!memoText) return;
+    if (!setMemos) return;
     setMemos((prevMemos) => {
       const dateTime = new Date().getTime();
 
@@ -44,10 +35,14 @@ export default function MemoPad({ currentTime }: MemoPadProps) {
   }
 
   function handleDeleteMemo(id: string) {
+    if (!setMemos) return;
+
     setMemos((prevMemos) => prevMemos.filter((memo) => memo.id !== id));
   }
   function handleUpdateMemo(targetId: string, memoText: string) {
     console.log(memoText);
+    if (!setMemos) return;
+
     setMemos((prevMemos) =>
       prevMemos.map((memo) => {
         if (memo.id === targetId) {
@@ -64,7 +59,7 @@ export default function MemoPad({ currentTime }: MemoPadProps) {
     <Section component="section">
       <MemoInput currentTime={currentTime} onCreateMemo={handleMemoSubmit} />
       <MemoItems
-        memos={memos}
+        memos={memos || []}
         onUpdateMemo={handleUpdateMemo}
         onDeleteMemo={handleDeleteMemo}
       />

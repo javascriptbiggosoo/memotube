@@ -8,11 +8,14 @@ import { YouTubeVideo } from "../../../components/Home/YouTubeVideo";
 import MemoItems from "../../../components/Home/Memopad/MemoItems";
 import styled from "styled-components";
 import { Box } from "@mui/material";
+import { useVideoStartInit } from "../../../hooks/useVideoStartInit";
 
 export default function PostPage() {
   const { postId } = useParams<"postId">();
   const postsState = useRecoilValue(videoPostsState);
   const [post, setPost] = useState<IPost>();
+  useVideoStartInit();
+
   useEffect(() => {
     const post = postsState.find((post) => post.id === postId);
 
@@ -23,7 +26,9 @@ export default function PostPage() {
     <div>
       {post && (
         <>
-          <div>{post?.title}</div>
+          <Header>
+            <Title>{post.title}</Title>
+          </Header>
           <YouTubeVideo videoId={post.content.videoId} />
 
           {/* 메모 */}
@@ -36,6 +41,23 @@ export default function PostPage() {
     </div>
   );
 }
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 10px;
+`;
+
+const Title = styled.h2`
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+`;
 const MemoContainer = styled(Box)`
   padding: 20px;
   border: 1px solid #e0e0e0;

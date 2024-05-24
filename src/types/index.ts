@@ -11,6 +11,14 @@ export interface IVideoMemos {
   memos: IMemo[];
 }
 
+export interface IMyMemo {
+  id: string;
+  thumbnail: string;
+  title: string;
+  createdAt: number;
+  content: IVideoMemos;
+}
+
 export interface IPost {
   id: string;
   thumbnail: string;
