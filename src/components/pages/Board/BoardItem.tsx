@@ -1,8 +1,9 @@
 import { TableCell, TableRow } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
-import { IPost } from "../../types";
+import { IPost } from "../../../types";
 import { useNavigate } from "react-router-dom";
+import { formatPostedTime } from "../../../utils/formatPostedTime";
 
 interface IBoardItemProps {
   post: IPost;
@@ -18,9 +19,9 @@ export default function BoardItem({ post }: IBoardItemProps) {
       <ImageCell onClick={() => handleClick()}>
         <img src={post.thumbnail} alt={post.title} />
       </ImageCell>
-      <TableCell onClick={() => handleClick()}>{post.title}</TableCell>
+      <TitleCell onClick={() => handleClick()}>{post.title}</TitleCell>
       <TableCell>{post.author}</TableCell>
-      <TableCell>{post.createdAt}</TableCell>
+      <TableCell>{formatPostedTime(post.createdAt)}</TableCell>
       <TableCell>{post.likes.likeCount}</TableCell>
     </TableRow>
   );
@@ -32,4 +33,7 @@ const ImageCell = styled(TableCell)`
     width: 100px;
     height: auto;
   }
+`;
+const TitleCell = styled(TableCell)`
+  cursor: pointer;
 `;

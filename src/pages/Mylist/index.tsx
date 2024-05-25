@@ -1,5 +1,6 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   List,
@@ -14,22 +15,27 @@ import { myVideoMemoListState } from "../../atoms/myVideoMemoList";
 
 export default function MylistPage() {
   const myMemoList = useRecoilValue(myVideoMemoListState);
+  const navigate = useNavigate();
+
+  const handleItemClick = (id: string) => {
+    navigate(`/mylist/${id}`);
+  };
 
   return (
     <MylistContainer>
       <Header>
-        <Title>내 메모튜브</Title>
+        <Title>마이리스트</Title>
       </Header>
       <StyledList>
         {myMemoList.map((memo) => (
           <div key={memo.id}>
-            <StyledListItem>
+            <StyledListItem onClick={() => handleItemClick(memo.id)}>
               <ListItemAvatar>
                 <StyledAvatar src={memo.thumbnail} alt={memo.title} />
               </ListItemAvatar>
               <ListItemText
                 primary={memo.title}
-                secondary={`Created at: ${new Date(
+                secondary={`작성일: ${new Date(
                   memo.createdAt
                 ).toLocaleString()}`}
               />
@@ -70,6 +76,7 @@ const StyledList = styled(List)`
 
 const StyledListItem = styled(ListItem)`
   padding: 1rem;
+  cursor: pointer; /* 커서 변경 */
   &:hover {
     background-color: #f5f5f5;
   }

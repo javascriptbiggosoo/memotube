@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import styled from "styled-components";
 import { videoPostsState } from "../../atoms/videoPostAtoms";
-import BoardItem from "../../components/Board/BoardItem";
+import BoardItem from "../../components/pages/Board/BoardItem";
 
 export const BoardPage = () => {
   const videoPosts = useRecoilValue(videoPostsState);
@@ -74,7 +74,6 @@ const Title = styled.h2`
 `;
 
 const StyledTableContainer = styled(TableContainer)`
-  border: 1px solid #e0e0e0;
   border-radius: 10px;
   background-color: #f5f5f5;
 `;

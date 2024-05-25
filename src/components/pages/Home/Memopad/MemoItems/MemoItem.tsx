@@ -11,8 +11,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useSetRecoilState } from "recoil";
 
-import { playerVarsState } from "../../../atoms/videoPlayerAtoms";
-import parseTimeToSeconds from "../../../utils/parseTimeToSeconds";
+import { playerVarsState } from "../../../../../atoms/videoPlayerAtoms";
+import parseTimeToSeconds from "../../../../../utils/parseTimeToSeconds";
 import { useForm } from "react-hook-form";
 
 interface MemoProps {
@@ -47,7 +47,8 @@ export default function MemoItem({
   const handleEditClick = () => {
     setIsUpdating((prev) => !prev);
   };
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (ev: React.MouseEvent) => {
+    ev.stopPropagation();
     onDeleteMemo && onDeleteMemo(id);
   };
 

@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { YouTubeEvent } from "react-youtube";
 import { Button, Container } from "@mui/material";
 import styled from "styled-components";
-import { YouTubeVideo } from "../components/Home/YouTubeVideo";
-import VideoUrlInput from "../components/Home/VideoUrlInput";
-import MemoPad from "../components/Home/Memopad";
+import { YoutubeVideo } from "../components/YoutubeVideo/YoutubeVideo";
+import VideoUrlInput from "../components/pages/Home/VideoUrlInput";
+import MemoPad from "../components/pages/Home/Memopad";
 import formatTime from "../utils/formatMemoTime";
-import MSnackbar from "../components/UI/MSnackbar";
+// import MSnackbar from "../components/UI/MSnackbar";
 import { IMemo } from "../types";
 import { useVideoStartInit } from "../hooks/useVideoStartInit";
+import AddMyListModal from "../components/pages/Home/AddMyListModal";
 
 const dummyMemos = [
   {
@@ -25,10 +26,11 @@ const dummyMemos = [
   },
 ];
 
-const dummyUrl = "hnanNlDbsE4";
+const dummyVideoId = "hnanNlDbsE4";
 export default function HomePage() {
-  const [isSnbOpen, setIsSnbOpen] = useState(true);
-  const [videoUrl, setVideoUrl] = useState(dummyUrl);
+  // const [isSnbOpen, setIsSnbOpen] = useState(true);
+  const [isAddListOpen, setIsAddListOpen] = useState(false);
+  const [videoId, setVideoUrl] = useState(dummyVideoId);
   const [currentTime, setCurrentTime] = useState("00:00");
   const [memos, setMemos] = useState<IMemo[]>(dummyMemos);
   useVideoStartInit();
@@ -47,19 +49,33 @@ export default function HomePage() {
   return (
     <HomePageContainer>
       <VideoUrlInput onUrlSubmit={showVideo} />
-      <YouTubeVideo videoId={videoUrl} onStateChange={getCurrentTime} />
-      <SaveButton variant="contained" color="primary">
-        리스트에 저장하기
-      </SaveButton>
+      <YoutubeVideo videoId={videoId} onStateChange={getCurrentTime} />
+      {memos.length > 0 && (
+        <SaveButton
+          variant="contained"
+          color="primary"
+          onClick={() => setIsAddListOpen(true)}
+        >
+          마이리스트에 저장
+        </SaveButton>
+      )}
+
+      <AddMyListModal
+        memos={memos}
+        videoId={videoId}
+        open={isAddListOpen}
+        onClose={() => setIsAddListOpen(false)}
+      />
+
       <MemoPad currentTime={currentTime} memos={memos} setMemos={setMemos} />
 
-      <MSnackbar
+      {/* <MSnackbar
         message="사용 이해를 돕기 위해 더미 데이터를 포함시킨 페이지입니다."
         open={isSnbOpen}
         onSnackbarClose={() => {
           setIsSnbOpen(false);
         }}
-      />
+      /> */}
     </HomePageContainer>
   );
 }

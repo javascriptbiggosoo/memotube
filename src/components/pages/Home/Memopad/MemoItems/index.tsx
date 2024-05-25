@@ -1,7 +1,7 @@
 import { List } from "@mui/material";
 import React from "react";
 import MemoItem from "./MemoItem";
-import { IMemo } from "../../../types";
+import { IMemo } from "../../../../../types";
 
 interface Props {
   memos: IMemo[];

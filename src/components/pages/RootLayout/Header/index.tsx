@@ -4,7 +4,7 @@ import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 
-import { isLoggedInState } from "../../../atoms/userAtoms";
+import { isLoggedInState } from "../../../../atoms/userAtoms";
 // import AboutModal from "./AboutModal";
 import AuthModal from "./AuthModal";
 
@@ -73,7 +73,7 @@ export default function Header() {
                 to="/mylist"
                 style={{ fontWeight: matchMylist ? "bold" : "normal" }}
               >
-                내 메모튜브
+                마이리스트
               </Link>
             </Item>
             {/* <AboutModal

@@ -3,7 +3,7 @@ import MemoInput from "./MemoInput";
 import styled from "styled-components";
 import MemoItems from "./MemoItems";
 import { Box } from "@mui/material";
-import { IMemo } from "../../../types";
+import { IMemo } from "../../../../types";
 
 interface MemoPadProps {
   currentTime: string;

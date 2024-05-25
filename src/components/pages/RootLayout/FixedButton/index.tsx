@@ -1,7 +1,7 @@
 import { Box, FormControlLabel, Switch } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
-import { isDescState } from "../../../atoms/descAtoms";
+import { isDescState } from "../../../../atoms/descAtoms";
 import { useRecoilState } from "recoil";
 
 export default function FixedButton() {

@@ -10,7 +10,7 @@ interface Props {
   onStateChange?: (event: YouTubeEvent) => void;
 }
 
-export const YouTubeVideo = ({ videoId, onStateChange }: Props) => {
+export const YoutubeVideo = ({ videoId, onStateChange }: Props) => {
   const [player, setPlayer] = useState<typeof YouTubePlayer>();
   const [pauseVideo, setPauseVideo] = useRecoilState(pauseVideoState);
   const playerVars = useRecoilValue(playerVarsState);

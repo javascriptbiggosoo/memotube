@@ -4,23 +4,23 @@ import { videoPostsState } from "../../../atoms/videoPostAtoms";
 import { useRecoilValue } from "recoil";
 import { IPost } from "../../../types";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import { YouTubeVideo } from "../../../components/Home/YouTubeVideo";
-import MemoItems from "../../../components/Home/Memopad/MemoItems";
+import { YoutubeVideo } from "../../../components/YoutubeVideo/YoutubeVideo";
+import MemoItems from "../../../components/pages/Home/Memopad/MemoItems";
 import styled from "styled-components";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useVideoStartInit } from "../../../hooks/useVideoStartInit";
 
 export default function PostPage() {
   const { postId } = useParams<"postId">();
-  const postsState = useRecoilValue(videoPostsState);
+  const videoPosts = useRecoilValue(videoPostsState);
   const [post, setPost] = useState<IPost>();
   useVideoStartInit();
 
   useEffect(() => {
-    const post = postsState.find((post) => post.id === postId);
+    const post = videoPosts.find((post) => post.id === postId);
 
     setPost(post);
-  }, [postsState, postId]);
+  }, [videoPosts, postId]);
 
   return (
     <div>
@@ -28,20 +28,23 @@ export default function PostPage() {
         <>
           <Header>
             <Title>{post.title}</Title>
+            <Actions>
+              <ThumbUpIconStyled />
+              <DeleteButton variant="contained" color="warning">
+                게시글 삭제
+              </DeleteButton>
+            </Actions>
           </Header>
-          <YouTubeVideo videoId={post.content.videoId} />
+          <YoutubeVideo videoId={post.content.videoId} />
 
-          {/* 메모 */}
           <MemoContainer component="section">
             <MemoItems memos={post.content.memos} />
           </MemoContainer>
-          <ThumbUpIcon />
         </>
       )}
     </div>
   );
 }
-
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -58,6 +61,26 @@ const Title = styled.h2`
   padding: 0;
   text-align: left;
 `;
+
+const Actions = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ThumbUpIconStyled = styled(ThumbUpIcon)`
+  margin-right: 10px;
+  cursor: pointer;
+  color: #1976d2;
+`;
+
+const DeleteButton = styled(Button)`
+  background-color: #f44336;
+  color: #fff;
+  &:hover {
+    background-color: #d32f2f;
+  }
+`;
+
 const MemoContainer = styled(Box)`
   padding: 20px;
   border: 1px solid #e0e0e0;

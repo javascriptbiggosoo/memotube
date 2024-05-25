@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import MModal from "../../UI/MModal";
+import MModal from "../../../UI/MModal";
 
 interface AboutModalProps {
   open: boolean;
