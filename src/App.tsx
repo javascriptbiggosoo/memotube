@@ -5,7 +5,7 @@ import ProfilePage from "./pages/Profile";
 import { BoardPage } from "./pages/Board";
 import PostPage from "./pages/Board/Post";
 import MylistPage from "./pages/Mylist";
-import MyListItemPage from "./pages/Mylist/MyListItem";
+import MylistItemPage from "./pages/Mylist/MylistItem";
 
 const router = createBrowserRouter(
   [
@@ -16,7 +16,7 @@ const router = createBrowserRouter(
         { path: "/", element: <HomePage /> },
         { path: "/profile", element: <ProfilePage /> },
         { path: "/mylist", element: <MylistPage /> },
-        { path: "/mylist/:listId", element: <MyListItemPage /> },
+        { path: "/mylist/:listId", element: <MylistItemPage /> },
         {
           path: "/board",
           element: <BoardPage />,

@@ -5,7 +5,9 @@ import styled from "styled-components";
 import MModal from "../../../UI/MModal";
 import { useSetRecoilState } from "recoil";
 import { myVideoMemoListState } from "../../../../atoms/myVideoMemoList";
-import { IMemo } from "../../../../types";
+import { IMemo, IMyMemo } from "../../../../types";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 interface MModalProps {
   memos: IMemo[];
@@ -30,8 +32,26 @@ export default function AddMyListModal({
     formState: { errors },
   } = useForm<IFormInput>();
   const setMyVideoMemoListState = useSetRecoilState(myVideoMemoListState);
+  const mutation = useMutation({
+    mutationFn: (newMyMemo: IMyMemo) =>
+      axios.post("http://localhost:8080/mylist", newMyMemo),
+    onSuccess: () => {
+      // 성공시
+    },
+  });
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    mutation.mutate({
+      id: crypto.randomUUID(),
+      thumbnail: `https://img.youtube.com/vi/${videoId}/default.jpg`,
+      content: {
+        id: crypto.randomUUID(),
+        videoId,
+        memos,
+      },
+      createdAt: new Date().getTime(),
+      title: data.title,
+    });
     setMyVideoMemoListState((prev) => [
       ...prev,
       {

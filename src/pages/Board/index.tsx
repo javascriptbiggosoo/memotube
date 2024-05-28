@@ -12,12 +12,24 @@ import {
 import styled from "styled-components";
 import { videoPostsState } from "../../atoms/videoPostAtoms";
 import BoardItem from "../../components/pages/Board/BoardItem";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export const BoardPage = () => {
   const videoPosts = useRecoilValue(videoPostsState);
-
-  const handleAddPost = () => {
-    console.log("Add post button clicked");
+  const { data } = useQuery({
+    queryKey: ["posts"],
+    queryFn: () =>
+      axios.get("http://localhost:8080/posts").then((res) => res.data),
+    staleTime: 0,
+    refetchOnWindowFocus: true,
+  });
+  console.log(data);
+  const mutation = useMutation({
+    mutationFn: () => axios.post("http://localhost:8080/posts", {}),
+  });
+  const handleAddPost = async () => {
+    mutation.mutate();
   };
 
   return (

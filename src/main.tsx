@@ -6,14 +6,17 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./styles/GlobalStyle.ts";
 import { theme } from "./styles/theme.ts";
 import App from "./App.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+export const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+  <QueryClientProvider client={queryClient}>
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <App />
       </ThemeProvider>
     </RecoilRoot>
-  </React.StrictMode>
+  </QueryClientProvider>
 );

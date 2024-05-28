@@ -1,3 +1,6 @@
+export interface IUser {
+  email: string;
+}
 export interface IMemo {
   id: string;
   memoTime: string;

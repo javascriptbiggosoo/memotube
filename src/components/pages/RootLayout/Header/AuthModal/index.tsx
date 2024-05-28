@@ -5,7 +5,7 @@ import LoginForm from "./LoginForm";
 
 interface AuthModalProps {
   open: boolean;
-  handleClose: (event: React.MouseEvent) => void;
+  handleClose: () => void;
 }
 
 export default function AuthModal({ open, handleClose }: AuthModalProps) {
@@ -17,7 +17,10 @@ export default function AuthModal({ open, handleClose }: AuthModalProps) {
         {isLogin ? "로그인" : "회원가입"}
       </Typography>
 
-      <LoginForm mode={isLogin ? "login" : "register"} />
+      <LoginForm
+        mode={isLogin ? "login" : "register"}
+        handleClose={handleClose}
+      />
 
       <Typography sx={{ mt: 2, color: "grey" }}>
         비밀번호는 6자 이상입니다.

@@ -8,9 +8,17 @@ import { IMyMemo } from "../../../types";
 import { Box, Button } from "@mui/material";
 import MemoItems from "../../../components/pages/Home/Memopad/MemoItems";
 import { YoutubeVideo } from "../../../components/YoutubeVideo/YoutubeVideo";
+import { useQuery } from "@tanstack/react-query";
 
-export default function MyListItemPage() {
+export default function MylistItemPage() {
   const { listId } = useParams<"listId">();
+  const { data } = useQuery<IMyMemo>({
+    queryKey: ["mylist", listId],
+    queryFn: () =>
+      fetch(`http://localhost:8080/mylist/${listId}`).then((res) => res.json()),
+    staleTime: 0,
+    refetchOnWindowFocus: true,
+  });
   const myVideoMemoList = useRecoilValue(myVideoMemoListState);
   const [mylist, setMylist] = useState<IMyMemo>();
   useVideoStartInit();

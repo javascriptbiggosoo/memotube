@@ -1,5 +1,5 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
+// import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -11,10 +11,20 @@ import {
   Avatar,
 } from "@mui/material";
 import styled from "styled-components";
-import { myVideoMemoListState } from "../../atoms/myVideoMemoList";
+// import { myVideoMemoListState } from "../../atoms/myVideoMemoList";
+import { useQuery } from "@tanstack/react-query";
+import { IMyMemo } from "../../types";
 
 export default function MylistPage() {
-  const myMemoList = useRecoilValue(myVideoMemoListState);
+  const { data } = useQuery<IMyMemo[]>({
+    queryKey: ["mylist"],
+    queryFn: () =>
+      fetch("http://localhost:8080/mylist").then((res) => res.json()),
+    staleTime: 0,
+    refetchOnWindowFocus: true,
+  });
+  console.log(data);
+  // const myMemoList = useRecoilValue(myVideoMemoListState);
   const navigate = useNavigate();
 
   const handleItemClick = (id: string) => {
@@ -27,22 +37,24 @@ export default function MylistPage() {
         <Title>마이리스트</Title>
       </Header>
       <StyledList>
-        {myMemoList.map((memo) => (
-          <div key={memo.id}>
-            <StyledListItem onClick={() => handleItemClick(memo.id)}>
-              <ListItemAvatar>
-                <StyledAvatar src={memo.thumbnail} alt={memo.title} />
-              </ListItemAvatar>
-              <ListItemText
-                primary={memo.title}
-                secondary={`작성일: ${new Date(
-                  memo.createdAt
-                ).toLocaleString()}`}
-              />
-            </StyledListItem>
-            <Divider />
-          </div>
-        ))}
+        {/* TODO 로딩 */}
+        {data &&
+          data.map((memo) => (
+            <div key={memo.id}>
+              <StyledListItem onClick={() => handleItemClick(memo.id)}>
+                <ListItemAvatar>
+                  <StyledAvatar src={memo.thumbnail} alt={memo.title} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={memo.title}
+                  secondary={`작성일: ${new Date(
+                    memo.createdAt
+                  ).toLocaleString()}`}
+                />
+              </StyledListItem>
+              <Divider />
+            </div>
+          ))}
       </StyledList>
     </MylistContainer>
   );
