@@ -4,9 +4,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios from "axios"; // axios import 추가
 import { setItem } from "../../../../../utils/localStorage";
-import axiosInstance from "../../../../../api/axiosInstance";
 import { useSetRecoilState } from "recoil";
 import { currentUserState } from "../../../../../atoms/userAtoms";
+import { login, signup } from "../../../../../api/auth.api";
 
 interface IFormInput {
   email: string;
@@ -15,13 +15,7 @@ interface IFormInput {
 
 interface ILoginFormProps {
   handleClose: () => void;
-  mode: "login" | "register";
-}
-
-interface IAuthResponse {
-  message: string;
-  token: string;
-  email: string;
+  mode: "login" | "signup";
 }
 
 export default function LoginForm({ mode, handleClose }: ILoginFormProps) {
@@ -32,40 +26,48 @@ export default function LoginForm({ mode, handleClose }: ILoginFormProps) {
     email,
     password,
   }: IFormInput) => {
-    try {
-      const response = await axiosInstance.post<IAuthResponse>(
-        `http://localhost:8080/auth/${mode}`,
-        {
-          email,
-          password,
+    if (mode === "login") {
+      try {
+        const { data, status } = await login({ email, password });
+
+        if (status === 422 || status === 401) {
+          alert("Authentication failed!");
+          throw new Error("Authentication failed!");
         }
-      );
-      console.log("res: " + response);
-      if (response.status === 422 || response.status === 401) {
-        console.log(response);
-        alert("Authentication failed!");
-        throw new Error("Authentication failed!");
-      }
+        // console.log(data);
 
-      if (mode === "register") {
-        alert("회원가입이 완료되었습니다.");
+        setCurrentUser({ email });
+        alert(`${email}님 로그인 성공!`);
+        setItem("token", data.token);
+
+        handleClose();
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          alert(error.response.data.message || "Authentication failed!");
+          setError("email", {
+            message: error.response.data.message || "Authentication failed!",
+          });
+        } else if (error instanceof Error) {
+          alert(error.message);
+          setError("email", { message: error.message });
+        }
+      }
+    } else if (mode === "signup") {
+      try {
+        await signup({ email, password });
+
+        alert(`${email}님 회원가입이 완료되었습니다.`);
         return;
-      }
-      const data = response.data;
-      setCurrentUser({ email: data.email });
-      // alert("로그인 성공!" + data.email);
-      setItem("token", data.token);
-
-      handleClose();
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        alert(error.response.data.message || "Authentication failed!");
-        setError("email", {
-          message: error.response.data.message || "Authentication failed!",
-        });
-      } else if (error instanceof Error) {
-        alert(error.message);
-        setError("email", { message: error.message });
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          alert(error.response.data.message || "Authentication failed!");
+          setError("email", {
+            message: error.response.data.message || "Authentication failed!",
+          });
+        } else if (error instanceof Error) {
+          alert(error.message);
+          setError("email", { message: error.message });
+        }
       }
     }
   };

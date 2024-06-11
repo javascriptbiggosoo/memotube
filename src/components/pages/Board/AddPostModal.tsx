@@ -1,8 +1,9 @@
 import React from "react";
+import MModal from "../../UI/MModal";
 
 interface AddPostModalProps {
   open: boolean;
-  onClose: (event: React.MouseEvent) => void;
+  onClose: () => void;
 }
 
 export default function AddPostModal({ open, onClose }: AddPostModalProps) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import {
@@ -14,18 +14,27 @@ import styled from "styled-components";
 // import { myVideoMemoListState } from "../../atoms/myVideoMemoList";
 import { useQuery } from "@tanstack/react-query";
 import { IMyMemo } from "../../types";
+import { useRecoilValue } from "recoil";
+import { currentUserState } from "../../atoms/userAtoms";
+import { getMylist } from "../../api/mylist.api";
 
 export default function MylistPage() {
+  const currentUser = useRecoilValue(currentUserState);
   const { data } = useQuery<IMyMemo[]>({
     queryKey: ["mylist"],
-    queryFn: () =>
-      fetch("http://localhost:8080/mylist").then((res) => res.json()),
+    queryFn: () => getMylist(),
     staleTime: 0,
     refetchOnWindowFocus: true,
   });
   console.log(data);
   // const myMemoList = useRecoilValue(myVideoMemoListState);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!currentUser) {
+      console.log("로그인이 필요한 서비스입니다.");
+      navigate("/");
+    }
+  }, [currentUser, navigate]);
 
   const handleItemClick = (id: string) => {
     navigate(`/mylist/${id}`);

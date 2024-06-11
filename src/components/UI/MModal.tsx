@@ -7,27 +7,27 @@ interface MModalProps {
   open: boolean;
   // 백드롭 클릭 시 호출되는 함수인데 여기선 가운데 정렬용 Box 때문에 발동될 것 같진 않음
   children: React.ReactNode;
-  handleClose: (event: React.MouseEvent) => void;
+  onClose: (event: React.MouseEvent) => void;
 }
 
-export default function MModal({ open, handleClose, children }: MModalProps) {
+export default function MModal({ open, onClose, children }: MModalProps) {
   return (
     <Modal
       open={open}
-      onClose={handleClose}
+      onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <ModalBackdrop
         onClick={(event) => {
           if (event.currentTarget === event.target) {
-            handleClose(event);
+            onClose(event);
           }
         }}
       >
         <ModalBox>
           <IconButton
-            onClick={handleClose}
+            onClick={onClose}
             sx={{
               position: "absolute",
               right: 8,

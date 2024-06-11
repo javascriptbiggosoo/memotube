@@ -1,26 +1,34 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
-import { isLoggedInState } from "../../../../atoms/userAtoms";
+import { currentUserState } from "../../../../atoms/userAtoms";
 // import AboutModal from "./AboutModal";
 import AuthModal from "./AuthModal";
+import { removeItem } from "../../../../utils/localStorage";
 
 export default function Header() {
-  const isLoggedIn = useRecoilValue(isLoggedInState);
   // const [openHowTo, setOpenHowTo] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
-  const matchProfile = useMatch("/profile");
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const matchBoard = useMatch("/board");
   const matchMylist = useMatch("/mylist");
+  const navigate = useNavigate();
 
   // const handleAboutClick = () => {
   //   setOpenHowTo((prev) => !prev);
   // };
   const handleLoginClick = () => {
     setOpenLogin((prev) => !prev);
+  };
+
+  const logout = () => {
+    removeItem("token");
+    setCurrentUser(null);
+    alert("로그아웃 되었습니다.");
+    navigate("/");
   };
 
   return (
@@ -68,29 +76,24 @@ export default function Header() {
                 게시판
               </Link>
             </Item>
-            <Item>
-              <Link
-                to="/mylist"
-                style={{ fontWeight: matchMylist ? "bold" : "normal" }}
-              >
-                마이리스트
-              </Link>
-            </Item>
+            {currentUser && (
+              <Item>
+                <Link
+                  to="/mylist"
+                  style={{ fontWeight: matchMylist ? "bold" : "normal" }}
+                >
+                  마이리스트
+                </Link>
+              </Item>
+            )}
             {/* <AboutModal
               open={openHowTo}
               handleClose={() => {
                 setOpenHowTo(false);
               }}
             /> */}
-            {isLoggedIn ? (
-              <Item>
-                <Link
-                  to="/profile"
-                  style={{ fontWeight: matchProfile ? "bold" : "normal" }}
-                >
-                  내 프로필
-                </Link>{" "}
-              </Item>
+            {currentUser ? (
+              <Item onClick={logout}>로그아웃</Item>
             ) : (
               <Item onClick={handleLoginClick}>로그인</Item>
             )}

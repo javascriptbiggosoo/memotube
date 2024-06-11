@@ -10,7 +10,7 @@ interface AboutModalProps {
 
 export default function AboutModal({ open, handleClose }: AboutModalProps) {
   return (
-    <MModal open={open} handleClose={handleClose}>
+    <MModal open={open} onClose={handleClose}>
       <Typography id="modal-modal-title" variant="h6" component="h2">
         메모튜브 사용법
       </Typography>

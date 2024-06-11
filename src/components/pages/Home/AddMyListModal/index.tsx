@@ -7,7 +7,7 @@ import { useSetRecoilState } from "recoil";
 import { myVideoMemoListState } from "../../../../atoms/myVideoMemoList";
 import { IMemo, IMyMemo } from "../../../../types";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import { createMylist } from "../../../../api/mylist.api";
 
 interface MModalProps {
   memos: IMemo[];
@@ -33,8 +33,7 @@ export default function AddMyListModal({
   } = useForm<IFormInput>();
   const setMyVideoMemoListState = useSetRecoilState(myVideoMemoListState);
   const mutation = useMutation({
-    mutationFn: (newMyMemo: IMyMemo) =>
-      axios.post("http://localhost:8080/mylist", newMyMemo),
+    mutationFn: (newMyMemo: IMyMemo) => createMylist(newMyMemo),
     onSuccess: () => {
       // 성공시
     },
@@ -70,7 +69,7 @@ export default function AddMyListModal({
   };
 
   return (
-    <MModal open={open} handleClose={onClose}>
+    <MModal open={open} onClose={onClose}>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <Title>저장하실 제목을 입력해주세요</Title>
         <TextField

@@ -19,6 +19,7 @@ export default function MylistItemPage() {
     staleTime: 0,
     refetchOnWindowFocus: true,
   });
+  console.log(data);
   const myVideoMemoList = useRecoilValue(myVideoMemoListState);
   const [mylist, setMylist] = useState<IMyMemo>();
   useVideoStartInit();

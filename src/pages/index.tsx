@@ -10,6 +10,8 @@ import formatTime from "../utils/formatMemoTime";
 import { IMemo } from "../types";
 import { useVideoStartInit } from "../hooks/useVideoStartInit";
 import AddMyListModal from "../components/pages/Home/AddMyListModal";
+import { useRecoilValue } from "recoil";
+import { currentUserState } from "../atoms/userAtoms";
 
 const dummyMemos = [
   {
@@ -34,6 +36,7 @@ export default function HomePage() {
   const [currentTime, setCurrentTime] = useState("00:00");
   const [memos, setMemos] = useState<IMemo[]>(dummyMemos);
   useVideoStartInit();
+  const currentUser = useRecoilValue(currentUserState);
 
   function showVideo(memo: string) {
     setVideoUrl(memo);
@@ -45,7 +48,13 @@ export default function HomePage() {
     setCurrentTime(formatTime(time));
     // console.log(time);
   }
-
+  function handleSaveClick() {
+    if (!currentUser) {
+      alert("로그인이 필요한 서비스입니다.");
+      return;
+    }
+    setIsAddListOpen(true);
+  }
   return (
     <HomePageContainer>
       <VideoUrlInput onUrlSubmit={showVideo} />
@@ -54,7 +63,7 @@ export default function HomePage() {
         <SaveButton
           variant="contained"
           color="primary"
-          onClick={() => setIsAddListOpen(true)}
+          onClick={handleSaveClick}
         >
           마이리스트에 저장
         </SaveButton>

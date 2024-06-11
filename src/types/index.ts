@@ -30,7 +30,7 @@ export interface IPost {
   author: string;
   createdAt: number;
   likes: ILikes;
-  category: string;
+  category?: string;
 }
 interface ILikes {
   likeCount: number;

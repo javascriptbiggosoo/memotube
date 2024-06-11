@@ -12,13 +12,13 @@ export default function AuthModal({ open, handleClose }: AuthModalProps) {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <MModal open={open} handleClose={handleClose}>
+    <MModal open={open} onClose={handleClose}>
       <Typography variant="h6" textAlign="center">
         {isLogin ? "로그인" : "회원가입"}
       </Typography>
 
       <LoginForm
-        mode={isLogin ? "login" : "register"}
+        mode={isLogin ? "login" : "signup"}
         handleClose={handleClose}
       />
 
