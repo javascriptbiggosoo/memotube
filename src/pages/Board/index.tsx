@@ -34,12 +34,12 @@ export const BoardPage = () => {
 
   return (
     <BoardContainer>
-      <Header>
+      <div className="header">
         <Title>게시판</Title>
         <Button variant="contained" color="primary" onClick={handleAddPost}>
           게시글 추가하기
         </Button>
-      </Header>
+      </div>
       <StyledTableContainer>
         <Table aria-label="video posts table">
           <TableHead>
@@ -66,14 +66,14 @@ const BoardContainer = styled.div`
   min-width: 800px;
   /* margin: auto; */
   /* margin-top: 2rem; */
-`;
 
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  padding: 0 10px;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0 10px;
+  }
 `;
 
 const Title = styled.h2`

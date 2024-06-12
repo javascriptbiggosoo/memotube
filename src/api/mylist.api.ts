@@ -11,6 +11,11 @@ export const getMylist = async () => {
   return response.data;
 };
 
+export const getMylistItem = async (id: string) => {
+  const response = await axiosInstance.get(`/mylist/${id}`);
+  return response.data;
+};
+
 export const deleteMylist = async (id: string) => {
   const response = await axiosInstance.delete(`/mylist/${id}`);
   return response.data;

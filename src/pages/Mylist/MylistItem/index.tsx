@@ -1,51 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { myVideoMemoListState } from "../../../atoms/myVideoMemoList";
-import { useRecoilValue } from "recoil";
 import { useVideoStartInit } from "../../../hooks/useVideoStartInit";
-import { IMyMemo } from "../../../types";
 import { Box, Button } from "@mui/material";
 import MemoItems from "../../../components/pages/Home/Memopad/MemoItems";
 import { YoutubeVideo } from "../../../components/YoutubeVideo/YoutubeVideo";
-import { useQuery } from "@tanstack/react-query";
+import { useMylistItem } from "../../../hooks/useMylist";
 
 export default function MylistItemPage() {
   const { listId } = useParams<"listId">();
-  const { data } = useQuery<IMyMemo>({
-    queryKey: ["mylist", listId],
-    queryFn: () =>
-      fetch(`http://localhost:8080/mylist/${listId}`).then((res) => res.json()),
-    staleTime: 0,
-    refetchOnWindowFocus: true,
-  });
-  console.log(data);
-  const myVideoMemoList = useRecoilValue(myVideoMemoListState);
-  const [mylist, setMylist] = useState<IMyMemo>();
+  const { mylistItemData } = useMylistItem(listId!);
   useVideoStartInit();
-
-  useEffect(() => {
-    const mylist = myVideoMemoList.find((mylist) => mylist.id === listId);
-
-    console.log(mylist);
-    setMylist(mylist);
-  }, [myVideoMemoList, listId]);
 
   return (
     <div>
-      {mylist && (
+      {mylistItemData && (
         <>
           <Header>
-            <Title>{mylist.title}</Title>
+            <Title>{mylistItemData.title}</Title>
             <Actions>
               <DeleteButton variant="contained" color="warning">
                 리스트에서 삭제
               </DeleteButton>
             </Actions>
           </Header>
-          <YoutubeVideo videoId={mylist.content.videoId} />
+          <YoutubeVideo videoId={mylistItemData.content.videoId} />
           <MemoContainer component="section">
-            <MemoItems memos={mylist.content.memos} />
+            <MemoItems memos={mylistItemData.content.memos} />
           </MemoContainer>
         </>
       )}

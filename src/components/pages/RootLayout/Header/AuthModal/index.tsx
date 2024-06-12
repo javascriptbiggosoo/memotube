@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Typography } from "@mui/material";
 import MModal from "../../../../UI/MModal";
-import LoginForm from "./LoginForm";
+import AuthForm from "./AuthForm";
 
 interface AuthModalProps {
   open: boolean;
@@ -17,10 +17,7 @@ export default function AuthModal({ open, handleClose }: AuthModalProps) {
         {isLogin ? "로그인" : "회원가입"}
       </Typography>
 
-      <LoginForm
-        mode={isLogin ? "login" : "signup"}
-        handleClose={handleClose}
-      />
+      <AuthForm mode={isLogin ? "login" : "signup"} handleClose={handleClose} />
 
       <Typography sx={{ mt: 2, color: "grey" }}>
         비밀번호는 6자 이상입니다.

@@ -18,7 +18,7 @@ interface ILoginFormProps {
   mode: "login" | "signup";
 }
 
-export default function LoginForm({ mode, handleClose }: ILoginFormProps) {
+export default function AuthForm({ mode, handleClose }: ILoginFormProps) {
   const { register, formState, handleSubmit, setError } = useForm<IFormInput>();
   const setCurrentUser = useSetRecoilState(currentUserState);
 
@@ -26,14 +26,11 @@ export default function LoginForm({ mode, handleClose }: ILoginFormProps) {
     email,
     password,
   }: IFormInput) => {
+    // useMutation 사용
     if (mode === "login") {
       try {
-        const { data, status } = await login({ email, password });
+        const data = await login({ email, password });
 
-        if (status === 422 || status === 401) {
-          alert("Authentication failed!");
-          throw new Error("Authentication failed!");
-        }
         // console.log(data);
 
         setCurrentUser({ email });

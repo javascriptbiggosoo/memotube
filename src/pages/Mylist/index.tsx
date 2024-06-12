@@ -20,6 +20,7 @@ import { getMylist } from "../../api/mylist.api";
 
 export default function MylistPage() {
   const currentUser = useRecoilValue(currentUserState);
+  const navigate = useNavigate();
   const { data } = useQuery<IMyMemo[]>({
     queryKey: ["mylist"],
     queryFn: () => getMylist(),
@@ -28,7 +29,7 @@ export default function MylistPage() {
   });
   console.log(data);
   // const myMemoList = useRecoilValue(myVideoMemoListState);
-  const navigate = useNavigate();
+
   useEffect(() => {
     if (!currentUser) {
       console.log("로그인이 필요한 서비스입니다.");
