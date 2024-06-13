@@ -2,12 +2,9 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button, TextField, Box } from "@mui/material";
 import styled from "styled-components";
-import MModal from "../../../UI/MModal";
-import { useSetRecoilState } from "recoil";
-import { myVideoMemoListState } from "../../../../atoms/myVideoMemoList";
-import { IMemo, IMyMemo } from "../../../../types";
-import { useMutation } from "@tanstack/react-query";
-import { createMylist } from "../../../../api/mylist.api";
+import MModal from "../../../common/MModal";
+import { IMemo } from "../../../../types";
+import { useMylist } from "../../../../hooks/useMylist";
 
 interface MModalProps {
   memos: IMemo[];
@@ -31,40 +28,15 @@ export default function AddMyListModal({
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>();
-  const setMyVideoMemoListState = useSetRecoilState(myVideoMemoListState);
-  const mutation = useMutation({
-    mutationFn: (newMyMemo: IMyMemo) => createMylist(newMyMemo),
-    onSuccess: () => {
-      // 성공시
-    },
-  });
+  const { addMylistItem } = useMylist();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    mutation.mutate({
-      id: crypto.randomUUID(),
-      thumbnail: `https://img.youtube.com/vi/${videoId}/default.jpg`,
-      content: {
-        id: crypto.randomUUID(),
-        videoId,
-        memos,
-      },
-      createdAt: new Date().getTime(),
+    addMylistItem({
+      videoId,
+      memos,
       title: data.title,
     });
-    setMyVideoMemoListState((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID(),
-        thumbnail: `https://img.youtube.com/vi/${videoId}/default.jpg`,
-        content: {
-          id: crypto.randomUUID(),
-          videoId,
-          memos,
-        },
-        createdAt: new Date().getTime(),
-        title: data.title,
-      },
-    ]);
+
     onClose();
   };
 

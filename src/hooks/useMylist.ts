@@ -1,15 +1,39 @@
-import { useQuery } from "@tanstack/react-query";
-import { IMyMemo } from "../types";
-import { getMylistItem } from "../api/mylist.api";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { IMemo, IMyMemo } from "../types";
+import { createMylist, getMylist } from "../api/mylist.api";
 
-export const useMylistItem = (listId: string) => {
-  const { data } = useQuery<IMyMemo>({
-    queryKey: ["mylist", listId],
-    queryFn: () => getMylistItem(listId),
+export const useMylist = () => {
+  const { data } = useQuery<IMyMemo[]>({
+    queryKey: ["mylist"],
+    queryFn: () => getMylist(),
     staleTime: 0,
     refetchOnWindowFocus: true,
   });
-  console.log(data);
+  const { mutate } = useMutation({
+    mutationFn: (newMyMemo: IMyMemo) => createMylist(newMyMemo),
+    onSuccess: () => {
+      // 성공시
+    },
+  });
 
-  return { mylistItemData: data };
+  interface IAddMylistItemProps {
+    videoId: string;
+    memos: IMemo[];
+    title: string;
+  }
+  const addMylistItem = ({ videoId, memos, title }: IAddMylistItemProps) => {
+    mutate({
+      id: crypto.randomUUID(),
+      thumbnail: `https://img.youtube.com/vi/${videoId}/default.jpg`,
+      content: {
+        id: crypto.randomUUID(),
+        videoId,
+        memos,
+      },
+      createdAt: new Date().getTime(),
+      title,
+    });
+  };
+
+  return { mylistData: data, addMylistItem };
 };

@@ -1,7 +1,9 @@
 export interface IUser {
+  _id?: string;
   email: string;
 }
 export interface IMemo {
+  _id?: string;
   id: string;
   memoTime: string;
   memoText: string;
@@ -9,12 +11,14 @@ export interface IMemo {
 }
 
 export interface IVideoMemos {
+  _id?: string;
   id: string;
   videoId: string;
   memos: IMemo[];
 }
 
 export interface IMyMemo {
+  _id?: string;
   id: string;
   thumbnail: string;
   title: string;
@@ -23,6 +27,7 @@ export interface IMyMemo {
 }
 
 export interface IPost {
+  _id?: string;
   id: string;
   thumbnail: string;
   title: string;
@@ -33,6 +38,7 @@ export interface IPost {
   category?: string;
 }
 interface ILikes {
+  _id?: string;
   likeCount: number;
   likedUser: string[];
 }

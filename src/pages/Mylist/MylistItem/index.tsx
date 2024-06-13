@@ -5,7 +5,7 @@ import { useVideoStartInit } from "../../../hooks/useVideoStartInit";
 import { Box, Button } from "@mui/material";
 import MemoItems from "../../../components/pages/Home/Memopad/MemoItems";
 import { YoutubeVideo } from "../../../components/YoutubeVideo/YoutubeVideo";
-import { useMylistItem } from "../../../hooks/useMylist";
+import { useMylistItem } from "../../../hooks/useMylistItem";
 
 export default function MylistItemPage() {
   const { listId } = useParams<"listId">();

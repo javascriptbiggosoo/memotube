@@ -1,5 +1,5 @@
 import React from "react";
-import MModal from "../../UI/MModal";
+import MModal from "../../common/MModal";
 
 interface AddPostModalProps {
   open: boolean;

@@ -1,1 +1,5 @@
-export const usePosts = () => {};
+export const usePosts = () => {
+
+  
+  return{}
+};
