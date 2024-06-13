@@ -1,5 +1,4 @@
-import React from "react";
-import { useRecoilValue } from "recoil";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -10,26 +9,16 @@ import {
   Button,
 } from "@mui/material";
 import styled from "styled-components";
-import { videoPostsState } from "../../atoms/videoPostAtoms";
 import BoardItem from "../../components/pages/Board/BoardItem";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { usePosts } from "../../hooks/usePosts";
+import AddPostModal from "../../components/pages/Board/AddPostModal";
 
 export const BoardPage = () => {
-  const videoPosts = useRecoilValue(videoPostsState);
-  const { data } = useQuery({
-    queryKey: ["posts"],
-    queryFn: () =>
-      axios.get("http://localhost:8080/posts").then((res) => res.data),
-    staleTime: 0,
-    refetchOnWindowFocus: true,
-  });
-  console.log(data);
-  const mutation = useMutation({
-    mutationFn: () => axios.post("http://localhost:8080/posts", {}),
-  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { postsData } = usePosts();
+
   const handleAddPost = async () => {
-    mutation.mutate();
+    setIsModalOpen(true);
   };
 
   return (
@@ -39,6 +28,12 @@ export const BoardPage = () => {
         <Button variant="contained" color="primary" onClick={handleAddPost}>
           게시글 추가하기
         </Button>
+        {isModalOpen && (
+          <AddPostModal
+            onClose={() => setIsModalOpen(false)}
+            open={isModalOpen}
+          />
+        )}
       </div>
       <StyledTableContainer>
         <Table aria-label="video posts table">
@@ -52,9 +47,9 @@ export const BoardPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {videoPosts.map((post) => (
-              <BoardItem key={post.id} post={post} />
-            ))}
+            {postsData
+              ? postsData.map((post) => <BoardItem key={post.id} post={post} />)
+              : "loading..."}
           </TableBody>
         </Table>
       </StyledTableContainer>

@@ -9,7 +9,7 @@ import formatTime from "../utils/formatMemoTime";
 // import MSnackbar from "../components/UI/MSnackbar";
 import { IMemo } from "../types";
 import { useVideoStartInit } from "../hooks/useVideoStartInit";
-import AddMyListModal from "../components/pages/Home/AddMyListModal";
+import AddMyListItemModal from "../components/pages/Home/AddMyListItemModal";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../atoms/userAtoms";
 
@@ -69,7 +69,7 @@ export default function HomePage() {
         </SaveButton>
       )}
 
-      <AddMyListModal
+      <AddMyListItemModal
         memos={memos}
         videoId={videoId}
         open={isAddListOpen}

@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useVideoStartInit } from "../../../hooks/useVideoStartInit";
 import { Box, Button } from "@mui/material";
@@ -11,7 +11,16 @@ export default function MylistItemPage() {
   const { listId } = useParams<"listId">();
   const { mylistItemData } = useMylistItem(listId!);
   useVideoStartInit();
+  const { deleteMylistItem } = useMylistItem(listId!);
+  const navigate = useNavigate();
 
+  const handleDelete = () => {
+    if (!confirm("정말 삭제하시겠습니까?")) {
+      return;
+    }
+    deleteMylistItem(listId!);
+    navigate("/mylist");
+  };
   return (
     <div>
       {mylistItemData && (
@@ -19,7 +28,11 @@ export default function MylistItemPage() {
           <Header>
             <Title>{mylistItemData.title}</Title>
             <Actions>
-              <DeleteButton variant="contained" color="warning">
+              <DeleteButton
+                variant="contained"
+                color="warning"
+                onClick={handleDelete}
+              >
                 리스트에서 삭제
               </DeleteButton>
             </Actions>

@@ -1,12 +1,13 @@
-import { Button, TextField } from "@mui/material";
 import React from "react";
+import { Button, TextField } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 import axios from "axios"; // axios import 추가
 import { setItem } from "../../../../../utils/localStorage";
 import { useSetRecoilState } from "recoil";
 import { currentUserState } from "../../../../../atoms/userAtoms";
-import { login, signup } from "../../../../../api/auth.api";
+import { fetchLogin, fetchSignup } from "../../../../../api/auth.api";
+import MSnackbar from "../../../../common/MSnackbar";
 
 interface IFormInput {
   email: string;
@@ -29,7 +30,7 @@ export default function AuthForm({ mode, handleClose }: ILoginFormProps) {
     // useMutation 사용
     if (mode === "login") {
       try {
-        const data = await login({ email, password });
+        const data = await fetchLogin({ email, password });
 
         // console.log(data);
 
@@ -51,7 +52,7 @@ export default function AuthForm({ mode, handleClose }: ILoginFormProps) {
       }
     } else if (mode === "signup") {
       try {
-        await signup({ email, password });
+        await fetchSignup({ email, password });
 
         alert(`${email}님 회원가입이 완료되었습니다.`);
         return;
@@ -70,52 +71,59 @@ export default function AuthForm({ mode, handleClose }: ILoginFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <TextField
-        {...register("email", { required: "Email is required" })}
-        label="이메일"
-        type="email"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        defaultValue="tbs01215@gmail.com"
+    <>
+      <MSnackbar
+        message="더미 유저로 바로 로그인 하실 수 있습니다."
+        onSnackbarClose={() => {}}
+        open={true}
       />
-      <TextField
-        {...register("password", {
-          required: "Password is required",
-          minLength: {
-            value: 6,
-            message: "Password must be at least 6 characters long",
-          },
-          pattern: {
-            value: /^[a-zA-Z0-9]+$/,
-            message: "Password must contain only letters and numbers",
-          },
-        })}
-        label="비밀번호"
-        type="password"
-        variant="outlined"
-        fullWidth
-        defaultValue="aaaaaa"
-        margin="normal"
-        error={!!formState.errors.password}
-        helperText={
-          formState.errors.password ? formState.errors.password.message : ""
-        }
-      />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <TextField
+          {...register("email", { required: "Email is required" })}
+          label="이메일"
+          type="email"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          defaultValue="tbs01215@gmail.com"
+        />
+        <TextField
+          {...register("password", {
+            required: "Password is required",
+            minLength: {
+              value: 6,
+              message: "Password must be at least 6 characters long",
+            },
+            pattern: {
+              value: /^[a-zA-Z0-9]+$/,
+              message: "Password must contain only letters and numbers",
+            },
+          })}
+          label="비밀번호"
+          type="password"
+          variant="outlined"
+          fullWidth
+          defaultValue="aaaaaa"
+          margin="normal"
+          error={!!formState.errors.password}
+          helperText={
+            formState.errors.password ? formState.errors.password.message : ""
+          }
+        />
 
-      <SubmitButton
-        type="submit"
-        variant="contained"
-        disabled={formState.isSubmitting}
-      >
-        {formState.isSubmitting
-          ? "제출 중..."
-          : mode === "login"
-          ? "로그인"
-          : "회원가입"}
-      </SubmitButton>
-    </form>
+        <SubmitButton
+          type="submit"
+          variant="contained"
+          disabled={formState.isSubmitting}
+        >
+          {formState.isSubmitting
+            ? "제출 중..."
+            : mode === "login"
+            ? "로그인"
+            : "회원가입"}
+        </SubmitButton>
+      </form>
+    </>
   );
 }
 

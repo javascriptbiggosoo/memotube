@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "../api/axiosInstance";
 import { IPost } from "../types";
+import { getPost } from "../api/board.api";
 
 export const usePost = (postId: string) => {
   const { data } = useQuery<IPost>({
     queryKey: ["post", postId],
-    queryFn: () => axiosInstance.get(`/posts/${postId}`),
+    queryFn: getPost.bind(null, postId),
     staleTime: 0,
     refetchOnWindowFocus: true,
   });

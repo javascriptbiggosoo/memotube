@@ -7,12 +7,12 @@ export const createPost = async (newPost: IPost) => {
 };
 
 export const getPosts = async () => {
-  const response = await axiosInstance.get("/posts");
+  const response = await axiosInstance.get<IPost[]>("/posts");
   return response.data;
 };
 
 export const getPost = async (id: string) => {
-  const response = await axiosInstance.get(`/posts/${id}`);
+  const response = await axiosInstance.get<IPost>(`/posts/${id}`);
   return response.data;
 };
 

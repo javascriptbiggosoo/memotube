@@ -5,7 +5,7 @@ import { createMylist, getMylist } from "../api/mylist.api";
 export const useMylist = () => {
   const { data } = useQuery<IMyMemo[]>({
     queryKey: ["mylist"],
-    queryFn: () => getMylist(),
+    queryFn: getMylist,
     staleTime: 0,
     refetchOnWindowFocus: true,
   });

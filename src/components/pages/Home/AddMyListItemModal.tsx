@@ -2,9 +2,9 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button, TextField, Box } from "@mui/material";
 import styled from "styled-components";
-import MModal from "../../../common/MModal";
-import { IMemo } from "../../../../types";
-import { useMylist } from "../../../../hooks/useMylist";
+import MModal from "../../common/MModal";
+import { IMemo } from "../../../types";
+import { useMylist } from "../../../hooks/useMylist";
 
 interface MModalProps {
   memos: IMemo[];
@@ -17,7 +17,7 @@ interface IFormInput {
   title: string;
 }
 
-export default function AddMyListModal({
+export default function AddMyListItemModal({
   open,
   onClose,
   memos,

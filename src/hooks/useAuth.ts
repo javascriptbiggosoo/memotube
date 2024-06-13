@@ -4,7 +4,12 @@ import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { currentUserState } from "../atoms/userAtoms";
 import { setItem } from "../utils/localStorage";
-import { ILoginResponse, IFormInput, login, signup } from "../api/auth.api";
+import {
+  ILoginResponse,
+  IFormInput,
+  fetchLogin,
+  fetchSignup,
+} from "../api/auth.api";
 
 // 비즈니스 로직 분리
 const useAuth = () => {
@@ -12,7 +17,7 @@ const useAuth = () => {
   const navigate = useNavigate();
 
   const loginMutation = useMutation<ILoginResponse, unknown, IFormInput>({
-    mutationFn: login,
+    mutationFn: fetchLogin,
     onSuccess: (data, variables) => {
       setCurrentUser({ email: variables.email });
       setItem("token", data.token);
@@ -29,7 +34,7 @@ const useAuth = () => {
   });
 
   const signupMutation = useMutation({
-    mutationFn: signup,
+    mutationFn: fetchSignup,
     onSuccess: (_, variables) => {
       alert(`${variables.email}님 회원가입이 완료되었습니다.`);
     },

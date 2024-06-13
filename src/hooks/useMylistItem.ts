@@ -1,15 +1,24 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { IMyMemo } from "../types";
-import { getMylistItem } from "../api/mylist.api";
+import { deleteMylist, getMylistItem } from "../api/mylist.api";
 
 export const useMylistItem = (listId: string) => {
   const { data } = useQuery<IMyMemo>({
     queryKey: ["mylist", listId],
-    queryFn: () => getMylistItem(listId),
+    queryFn: getMylistItem.bind(null, listId),
     staleTime: 0,
     refetchOnWindowFocus: true,
   });
-  console.log(data);
+  const { mutate } = useMutation({
+    mutationFn: (mylistId: string) => deleteMylist(mylistId),
+    onSuccess: () => {
+      // 성공시
+    },
+  });
 
-  return { mylistItemData: data };
+  const deleteMylistItem = (mylistId: string) => {
+    mutate(mylistId);
+  };
+
+  return { mylistItemData: data, deleteMylistItem };
 };

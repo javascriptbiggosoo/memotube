@@ -10,7 +10,7 @@ export interface ILoginResponse {
   token: string;
 }
 
-export const login = async ({ email, password }: IFormInput) => {
+export const fetchLogin = async ({ email, password }: IFormInput) => {
   const response = await axiosInstance.post<ILoginResponse>("/auth/login", {
     email,
     password,
@@ -19,7 +19,7 @@ export const login = async ({ email, password }: IFormInput) => {
   return response.data;
 };
 
-export const signup = async ({ email, password }: IFormInput) => {
+export const fetchSignup = async ({ email, password }: IFormInput) => {
   const response = await axiosInstance.post("/auth/signup", {
     email,
     password,

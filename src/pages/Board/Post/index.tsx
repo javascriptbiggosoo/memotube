@@ -1,33 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { videoPostsState } from "../../../atoms/videoPostAtoms";
-import { useRecoilValue } from "recoil";
-import { IPost } from "../../../types";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { YoutubeVideo } from "../../../components/YoutubeVideo/YoutubeVideo";
 import MemoItems from "../../../components/pages/Home/Memopad/MemoItems";
 import styled from "styled-components";
 import { Box, Button } from "@mui/material";
 import { useVideoStartInit } from "../../../hooks/useVideoStartInit";
+import { usePost } from "../../../hooks/usePost";
 
 export default function PostPage() {
   const { postId } = useParams<"postId">();
-  const videoPosts = useRecoilValue(videoPostsState);
-  const [post, setPost] = useState<IPost>();
+  const { postData } = usePost(postId!);
   useVideoStartInit();
-
-  useEffect(() => {
-    const post = videoPosts.find((post) => post.id === postId);
-
-    setPost(post);
-  }, [videoPosts, postId]);
 
   return (
     <div>
-      {post && (
+      {postData && (
         <>
           <Header>
-            <Title>{post.title}</Title>
+            <Title>{postData.title}</Title>
             <Actions>
               <ThumbUpIconStyled />
               <DeleteButton variant="contained" color="warning">
@@ -35,10 +26,10 @@ export default function PostPage() {
               </DeleteButton>
             </Actions>
           </Header>
-          <YoutubeVideo videoId={post.content.videoId} />
+          <YoutubeVideo videoId={postData.content.videoId} />
 
           <MemoContainer component="section">
-            <MemoItems memos={post.content.memos} />
+            <MemoItems memos={postData.content.memos} />
           </MemoContainer>
         </>
       )}

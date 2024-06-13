@@ -3,7 +3,7 @@ import { Box, IconButton, Modal } from "@mui/material";
 import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
 
-interface MModalProps {
+export interface MModalProps {
   open: boolean;
   // 백드롭 클릭 시 호출되는 함수인데 여기선 가운데 정렬용 Box 때문에 발동될 것 같진 않음
   children: React.ReactNode;
