@@ -20,7 +20,12 @@ interface ILoginFormProps {
 }
 
 export default function AuthForm({ mode, handleClose }: ILoginFormProps) {
-  const { register, formState, handleSubmit, setError } = useForm<IFormInput>();
+  const {
+    register,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+    setError,
+  } = useForm<IFormInput>();
   const setCurrentUser = useSetRecoilState(currentUserState);
 
   const onSubmit: SubmitHandler<IFormInput> = async ({
@@ -105,18 +110,12 @@ export default function AuthForm({ mode, handleClose }: ILoginFormProps) {
           fullWidth
           defaultValue="aaaaaa"
           margin="normal"
-          error={!!formState.errors.password}
-          helperText={
-            formState.errors.password ? formState.errors.password.message : ""
-          }
+          error={!!errors.password}
+          helperText={errors.password ? errors.password.message : ""}
         />
 
-        <SubmitButton
-          type="submit"
-          variant="contained"
-          disabled={formState.isSubmitting}
-        >
-          {formState.isSubmitting
+        <SubmitButton type="submit" variant="contained" disabled={isSubmitting}>
+          {isSubmitting
             ? "제출 중..."
             : mode === "login"
             ? "로그인"

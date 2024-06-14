@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { IMyMemo } from "../types";
+import { IMylistItem } from "../types";
 import { deleteMylist, getMylistItem } from "../api/mylist.api";
 
 export const useMylistItem = (listId: string) => {
-  const { data } = useQuery<IMyMemo>({
+  const { data } = useQuery<IMylistItem>({
     queryKey: ["mylist", listId],
     queryFn: getMylistItem.bind(null, listId),
     staleTime: 0,

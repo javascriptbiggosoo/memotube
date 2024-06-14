@@ -1,7 +1,7 @@
 import axiosInstance from "../api/axiosInstance";
-import { IMyMemo } from "../types";
+import { IMylistItem } from "../types";
 
-export const createMylist = async (newMyMemo: IMyMemo) => {
+export const createMylist = async (newMyMemo: IMylistItem) => {
   const response = await axiosInstance.post("/mylist", newMyMemo);
   return response.data;
 };

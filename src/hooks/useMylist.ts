@@ -1,16 +1,16 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { IMemo, IMyMemo } from "../types";
+import { IMemo, IMylistItem } from "../types";
 import { createMylist, getMylist } from "../api/mylist.api";
 
 export const useMylist = () => {
-  const { data } = useQuery<IMyMemo[]>({
+  const { data } = useQuery<IMylistItem[]>({
     queryKey: ["mylist"],
     queryFn: getMylist,
     staleTime: 0,
     refetchOnWindowFocus: true,
   });
   const { mutate } = useMutation({
-    mutationFn: (newMyMemo: IMyMemo) => createMylist(newMyMemo),
+    mutationFn: (newMyMemo: IMylistItem) => createMylist(newMyMemo),
     onSuccess: () => {
       // 성공시
     },

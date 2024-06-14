@@ -35,6 +35,7 @@ export default function HomePage() {
   const [videoId, setVideoUrl] = useState(dummyVideoId);
   const [currentTime, setCurrentTime] = useState("00:00");
   const [memos, setMemos] = useState<IMemo[]>(dummyMemos);
+
   useVideoStartInit();
   const currentUser = useRecoilValue(currentUserState);
 

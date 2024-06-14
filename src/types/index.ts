@@ -17,7 +17,7 @@ export interface IVideoMemos {
   memos: IMemo[];
 }
 
-export interface IMyMemo {
+export interface IMylistItem {
   _id?: string;
   id: string;
   thumbnail: string;

@@ -6,8 +6,14 @@ export const createPost = async (newPost: IPost) => {
   return response.data;
 };
 
-export const getPosts = async () => {
-  const response = await axiosInstance.get<IPost[]>("/posts");
+interface IGetPostsResponse {
+  posts: IPost[];
+  totalPosts: number;
+}
+export const getPosts = async (page: number, limit: number) => {
+  const response = await axiosInstance.get<IGetPostsResponse>(
+    `/posts?page=${page}&limit=${limit}`
+  );
   return response.data;
 };
 

@@ -13,7 +13,7 @@ import {
 import styled from "styled-components";
 // import { myVideoMemoListState } from "../../atoms/myVideoMemoList";
 import { useQuery } from "@tanstack/react-query";
-import { IMyMemo } from "../../types";
+import { IMylistItem } from "../../types";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../atoms/userAtoms";
 import { getMylist } from "../../api/mylist.api";
@@ -21,7 +21,7 @@ import { getMylist } from "../../api/mylist.api";
 export default function MylistPage() {
   const currentUser = useRecoilValue(currentUserState);
   const navigate = useNavigate();
-  const { data } = useQuery<IMyMemo[]>({
+  const { data } = useQuery<IMylistItem[]>({
     queryKey: ["mylist"],
     queryFn: () => getMylist(),
     staleTime: 0,

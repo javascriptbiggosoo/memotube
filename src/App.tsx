@@ -6,6 +6,12 @@ import { BoardPage } from "./pages/Board";
 import PostPage from "./pages/Board/Post";
 import MylistPage from "./pages/Mylist";
 import MylistItemPage from "./pages/Mylist/MylistItem";
+import { useEffect } from "react";
+import { isTokenValid } from "./utils/isTokenValid";
+import { getItem } from "./utils/localStorage";
+import { jwtDecode } from "jwt-decode";
+import { useSetRecoilState } from "recoil";
+import { currentUserState } from "./atoms/userAtoms";
 
 const router = createBrowserRouter(
   [
@@ -32,6 +38,14 @@ const router = createBrowserRouter(
 );
 
 function App() {
+  const setCurrentUser = useSetRecoilState(currentUserState);
+  useEffect(() => {
+    if (isTokenValid(getItem("token"))) {
+      const { email } = jwtDecode<{ email: string }>(getItem("token"));
+      setCurrentUser({ email });
+    }
+  }, []);
+
   return (
     <>
       <RouterProvider router={router} />
