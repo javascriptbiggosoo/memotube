@@ -11,9 +11,9 @@ import {
   Box,
 } from "@mui/material";
 import styled from "styled-components";
-import BoardItem from "../../components/pages/Board/BoardItem";
+import BoardItem from "../../components/pages/board/BoardItem";
 import { usePosts } from "../../hooks/usePosts";
-import AddPostModal from "../../components/pages/Board/AddPostModal";
+import AddPostModal from "../../components/pages/board/AddPostModal";
 import MLoading from "../../components/common/MLoading";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../atoms/userAtoms";

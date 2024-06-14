@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { YoutubeVideo } from "../../../components/YoutubeVideo/YoutubeVideo";
-import MemoItems from "../../../components/pages/Home/Memopad/MemoItems";
+import MemoItems from "../../../components/pages/home/Memopad/MemoItems";
 import styled from "styled-components";
 import { Box, Button } from "@mui/material";
 import { useVideoStartInit } from "../../../hooks/useVideoStartInit";

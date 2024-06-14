@@ -3,13 +3,13 @@ import { YouTubeEvent } from "react-youtube";
 import { Button, Container } from "@mui/material";
 import styled from "styled-components";
 import { YoutubeVideo } from "../components/YoutubeVideo/YoutubeVideo";
-import VideoUrlInput from "../components/pages/Home/VideoUrlInput";
-import MemoPad from "../components/pages/Home/Memopad";
+import VideoUrlInput from "../components/pages/home/VideoUrlInput";
+import MemoPad from "../components/pages/home/Memopad";
 import formatTime from "../utils/formatMemoTime";
 // import MSnackbar from "../components/UI/MSnackbar";
 import { IMemo } from "../types";
 import { useVideoStartInit } from "../hooks/useVideoStartInit";
-import AddMyListItemModal from "../components/pages/Home/AddMyListItemModal";
+import AddMyListItemModal from "../components/pages/home/AddMyListItemModal";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../atoms/userAtoms";
 

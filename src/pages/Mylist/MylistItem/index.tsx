@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useVideoStartInit } from "../../../hooks/useVideoStartInit";
 import { Box, Button } from "@mui/material";
-import MemoItems from "../../../components/pages/Home/Memopad/MemoItems";
+import MemoItems from "../../../components/pages/home/Memopad/MemoItems";
 import { YoutubeVideo } from "../../../components/YoutubeVideo/YoutubeVideo";
 import { useMylistItem } from "../../../hooks/useMylistItem";
 

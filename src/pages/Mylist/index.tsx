@@ -9,26 +9,18 @@ import {
   Divider,
   ListItemAvatar,
   Avatar,
+  IconButton,
 } from "@mui/material";
 import styled from "styled-components";
-// import { myVideoMemoListState } from "../../atoms/myVideoMemoList";
-import { useQuery } from "@tanstack/react-query";
-import { IMylistItem } from "../../types";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../atoms/userAtoms";
-import { getMylist } from "../../api/mylist.api";
+import { FaTrash } from "react-icons/fa";
+import { useMylist } from "../../hooks/useMylist";
 
 export default function MylistPage() {
   const currentUser = useRecoilValue(currentUserState);
   const navigate = useNavigate();
-  const { data } = useQuery<IMylistItem[]>({
-    queryKey: ["mylist"],
-    queryFn: () => getMylist(),
-    staleTime: 0,
-    refetchOnWindowFocus: true,
-  });
-  console.log(data);
-  // const myMemoList = useRecoilValue(myVideoMemoListState);
+  const { mylistData } = useMylist();
 
   useEffect(() => {
     if (!currentUser) {
@@ -41,18 +33,20 @@ export default function MylistPage() {
     navigate(`/mylist/${id}`);
   };
 
+  const handleDelete = (id: string) => {
+    console.log("삭제", id);
+  };
   return (
     <MylistContainer>
       <Header>
         <Title>마이리스트</Title>
       </Header>
       <StyledList>
-        {/* TODO 로딩 */}
-        {data &&
-          data.map((memo) => (
+        {mylistData &&
+          mylistData.map((memo) => (
             <div key={memo.id}>
-              <StyledListItem onClick={() => handleItemClick(memo.id)}>
-                <ListItemAvatar>
+              <StyledListItem>
+                <ListItemAvatar onClick={() => handleItemClick(memo.id)}>
                   <StyledAvatar src={memo.thumbnail} alt={memo.title} />
                 </ListItemAvatar>
                 <ListItemText
@@ -60,7 +54,15 @@ export default function MylistPage() {
                   secondary={`작성일: ${new Date(
                     memo.createdAt
                   ).toLocaleString()}`}
+                  onClick={() => handleItemClick(memo.id)}
                 />
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={() => handleDelete(memo.id)}
+                >
+                  <FaTrash />
+                </IconButton>
               </StyledListItem>
               <Divider />
             </div>
