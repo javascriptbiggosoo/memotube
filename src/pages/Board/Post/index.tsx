@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { YoutubeVideo } from "../../../components/YoutubeVideo/YoutubeVideo";
 import MemoItems from "../../../components/pages/home/Memopad/MemoItems";
@@ -9,6 +9,7 @@ import { usePost } from "../../../hooks/usePost";
 import LikeButton from "../../../components/pages/board/post/LikeButton";
 import { currentUserState } from "../../../atoms/userAtoms";
 import { useRecoilValue } from "recoil";
+import MDialog from "../../../components/common/MDialog";
 
 export default function PostPage() {
   const { postId } = useParams<"postId">();
@@ -21,13 +22,27 @@ export default function PostPage() {
   useVideoStartInit();
   const navigate = useNavigate();
 
-  const handleDeletePost = () => {
-    if (!confirm("정말 삭제하시겠습니까?")) {
-      return;
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  useEffect(() => {
+    if (postData) {
+      setLiked(
+        postData.likes.likedUser.includes(currentUser?.email || "없다능")
+      );
+      setLikeCount(postData.likes.likeCount);
     }
-    // 게시글 삭제 로직 추가
-    deletePost(postId!);
-    navigate("/board");
+  }, [postData, currentUser]);
+
+  const handleDeletePost = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = (confirm: boolean) => {
+    if (confirm) {
+      deletePost(postId!);
+      navigate("/board");
+    }
+    setDialogOpen(false);
   };
 
   const handleLike = () => {
@@ -66,6 +81,13 @@ export default function PostPage() {
           </MemoContainer>
         </>
       )}
+      <MDialog
+        open={dialogOpen}
+        title="게시글 삭제 확인"
+        onClose={handleDialogClose}
+      >
+        정말 삭제하시겠습니까?
+      </MDialog>
     </div>
   );
 }

@@ -1,15 +1,8 @@
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import extractYouTubeID from "../../../utils/extractYouTubeID";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-} from "@mui/material";
+import { TextField } from "@mui/material";
+import MDialog from "../../common/MDialog";
 
 type FormValues = {
   url: string;
@@ -42,6 +35,7 @@ export default function VideoUrlInput({ onUrlSubmit }: VideoUrlInputProps) {
     }
     setDialogOpen(false);
   };
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -54,28 +48,9 @@ export default function VideoUrlInput({ onUrlSubmit }: VideoUrlInputProps) {
           fullWidth
         />
       </form>
-      <Dialog
-        open={dialogOpen}
-        onClose={() => handleClose(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">URL 변경 확인</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            재생 중인 영상을 변경시 영상의 메모가 초기화됩니다.
-            계속하시겠습니까?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => handleClose(false)} color="primary">
-            취소
-          </Button>
-          <Button onClick={() => handleClose(true)} color="primary" autoFocus>
-            확인
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <MDialog open={dialogOpen} title="URL 변경 확인" onClose={handleClose}>
+        재생 중인 영상을 변경시 영상의 메모가 초기화됩니다. 계속하시겠습니까?
+      </MDialog>
     </>
   );
 }

@@ -20,7 +20,7 @@ import { currentUserState } from "../../atoms/userAtoms";
 import { useSearchParams } from "react-router-dom";
 import { POSTS_PER_PAGE } from "../../constants/pagination";
 
-export const BoardPage = () => {
+export default function BoardPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const page = +(searchParams.get("page") || "1");
@@ -86,7 +86,7 @@ export const BoardPage = () => {
       )}
     </BoardContainer>
   );
-};
+}
 
 const BoardContainer = styled.div`
   min-width: 800px;

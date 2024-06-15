@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -18,12 +18,16 @@ import { FaTrash } from "react-icons/fa";
 import { useMylist } from "../../hooks/useMylist";
 import { useDeleteMylistItem } from "../../hooks/useMylistItem";
 import MLoading from "../../components/common/MLoading";
+import MDialog from "../../components/common/MDialog";
 
 export default function MylistPage() {
   const currentUser = useRecoilValue(currentUserState);
   const navigate = useNavigate();
   const { mylistData, isMylistLoading } = useMylist();
   const { deleteMylistItem } = useDeleteMylistItem();
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!currentUser) {
@@ -37,10 +41,16 @@ export default function MylistPage() {
   };
 
   const handleDelete = (id: string) => {
-    if (!confirm("정말 삭제하시겠습니까?")) {
-      return;
+    setDeleteItemId(id);
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = (confirm: boolean) => {
+    if (confirm && deleteItemId) {
+      deleteMylistItem(deleteItemId);
     }
-    deleteMylistItem(id);
+    setDialogOpen(false);
+    setDeleteItemId(null);
   };
 
   return (
@@ -79,6 +89,13 @@ export default function MylistPage() {
       ) : (
         <EmptyMessage>마이리스트가 비어 있습니다.</EmptyMessage>
       )}
+      <MDialog
+        open={dialogOpen}
+        title="리스트 삭제 확인"
+        onClose={handleDialogClose}
+      >
+        정말 삭제하시겠습니까?
+      </MDialog>
     </MylistContainer>
   );
 }

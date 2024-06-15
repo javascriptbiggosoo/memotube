@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useVideoStartInit } from "../../../hooks/useVideoStartInit";
@@ -9,6 +9,7 @@ import {
   useDeleteMylistItem,
   useMylistItem,
 } from "../../../hooks/useMylistItem";
+import MDialog from "../../../components/common/MDialog";
 
 export default function MylistItemPage() {
   const { listId } = useParams<"listId">();
@@ -17,18 +18,19 @@ export default function MylistItemPage() {
   const { deleteMylistItem } = useDeleteMylistItem();
   const navigate = useNavigate();
 
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const handleDelete = () => {
-    if (!confirm("정말 삭제하시겠습니까?")) {
-      return;
-    }
-    deleteMylistItem(listId!);
-    navigate("/mylist");
+    setDialogOpen(true);
   };
 
-  // const handlePost = () => {
-  //   // 게시판에 등록하는 로직 추가
-  //   console.log("게시판에 등록:", listId);
-  // };
+  const handleDialogClose = (confirm: boolean) => {
+    if (confirm) {
+      deleteMylistItem(listId!);
+      navigate("/mylist");
+    }
+    setDialogOpen(false);
+  };
 
   return (
     <div>
@@ -59,6 +61,13 @@ export default function MylistItemPage() {
           </MemoContainer>
         </>
       )}
+      <MDialog
+        open={dialogOpen}
+        title="리스트 삭제 확인"
+        onClose={handleDialogClose}
+      >
+        정말 삭제하시겠습니까?
+      </MDialog>
     </div>
   );
 }
