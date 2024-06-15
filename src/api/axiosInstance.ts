@@ -7,6 +7,7 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(
@@ -19,6 +20,7 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
+    console.error(error);
     return Promise.reject(error);
   }
 );

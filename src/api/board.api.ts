@@ -1,3 +1,4 @@
+import { BASE_URL } from "../constants/url";
 import { IPost } from "../types";
 import axiosInstance from "./axiosInstance";
 
@@ -11,10 +12,17 @@ interface IGetPostsResponse {
   totalPosts: number;
 }
 export const fetchGetPosts = async (page: number, limit: number) => {
-  const response = await axiosInstance.get<IGetPostsResponse>(
-    `/posts?page=${page}&limit=${limit}`
-  );
-  return response.data;
+  console.log("아");
+  console.log(BASE_URL + `/posts?page=${page}&limit=${limit}`);
+  try {
+    const response = await axiosInstance.get<IGetPostsResponse>(
+      `/posts?page=${page}&limit=${limit}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
 
 export const fetchGetPost = async (id: string) => {
