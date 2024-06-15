@@ -6,10 +6,15 @@ import styled from "styled-components";
 interface Props {
   onClick: () => void;
   likeCount: number;
+  liked: boolean;
 }
-export default function LikeButton({ onClick, likeCount }: Props) {
+export default function LikeButton({ onClick, likeCount, liked }: Props) {
   return (
-    <LikeButtonStyle onClick={onClick} size="large" color="error">
+    <LikeButtonStyle
+      onClick={onClick}
+      size="large"
+      color={liked ? "error" : "primary"}
+    >
       <FaHeart />
       {likeCount || 0}
     </LikeButtonStyle>

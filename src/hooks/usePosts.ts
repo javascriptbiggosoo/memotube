@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPosts } from "../api/board.api";
+import { fetchGetPosts } from "../api/board.api";
 import { POSTS_PER_PAGE } from "../constants/pagination";
 
 interface IAddPostProps {
@@ -12,8 +12,8 @@ export const usePosts = ({
 }: IAddPostProps) => {
   // 추후 페이지 기능은 따로 수정
   const { data, isLoading } = useQuery({
-    queryKey: ["posts"],
-    queryFn: getPosts.bind(null, page, limit),
+    queryKey: ["posts", page, limit],
+    queryFn: fetchGetPosts.bind(null, page, limit),
     staleTime: 0,
     refetchOnWindowFocus: true,
   });

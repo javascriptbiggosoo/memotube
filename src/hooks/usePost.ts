@@ -4,26 +4,61 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 import { IMylistItem, IPost } from "../types";
-import { createPost, getPost } from "../api/board.api";
+import {
+  fethCreatePost,
+  fetchGetPost,
+  fetchDeletePost,
+  fetchLikePost,
+  fetchUnlikePost,
+} from "../api/board.api";
 import { queryClient } from "../api/queryClient";
 
 export const usePost = (postId: string) => {
   const { data } = useQuery<IPost>({
     queryKey: ["post", postId],
-    queryFn: getPost.bind(null, postId),
+    queryFn: fetchGetPost.bind(null, postId),
     staleTime: 0,
     refetchOnWindowFocus: true,
   });
-  // const likeToggle = () => {};
-  // const deletePost = () => {};
+  const { mutate } = useMutation({
+    mutationFn: (postId: string) => fetchDeletePost(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["posts"] as InvalidateQueryFilters);
+    },
+  });
+
+  const deletePost = (postId: string) => {
+    mutate(postId);
+  };
+
+  const { mutate: likeMutate } = useMutation({
+    mutationFn: (postId: string) => fetchLikePost(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["post", postId] as InvalidateQueryFilters);
+    },
+  });
+
+  const { mutate: unlikeMutate } = useMutation({
+    mutationFn: (postId: string) => fetchUnlikePost(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["post", postId] as InvalidateQueryFilters);
+    },
+  });
+  const toggleLike = (liked: boolean) => {
+    if (liked) {
+      unlikeMutate(postId);
+    } else {
+      likeMutate(postId);
+    }
+  };
   // const editPost = () => {};
   // const addReview = () => {};
-  return { postData: data };
+  return { postData: data, deletePost, toggleLike };
 };
 
 export const useAddPost = () => {
   const { mutate } = useMutation({
-    mutationFn: (newPost: IPost) => createPost(newPost),
+    mutationFn: (newPost: IPost) => fethCreatePost(newPost),
     onSuccess: () => {
       // 성공시
       queryClient.invalidateQueries(["posts"] as InvalidateQueryFilters);

@@ -25,10 +25,10 @@ export default function MylistItemPage() {
     navigate("/mylist");
   };
 
-  const handlePost = () => {
-    // 게시판에 등록하는 로직 추가
-    console.log("게시판에 등록:", listId);
-  };
+  // const handlePost = () => {
+  //   // 게시판에 등록하는 로직 추가
+  //   console.log("게시판에 등록:", listId);
+  // };
 
   return (
     <div>
@@ -44,13 +44,13 @@ export default function MylistItemPage() {
               >
                 리스트에서 삭제
               </DeleteButton>
-              <PostButton
+              {/* <PostButton
                 variant="contained"
                 color="primary"
                 onClick={handlePost}
               >
                 게시판에 등록
-              </PostButton>
+              </PostButton> */}
             </Actions>
           </Header>
           <YoutubeVideo videoId={mylistItemData.content.videoId} />
@@ -71,13 +71,13 @@ const DeleteButton = styled(Button)`
   }
 `;
 
-const PostButton = styled(Button)`
-  background-color: #2196f3;
-  color: #fff;
-  &:hover {
-    background-color: #1976d2;
-  }
-`;
+// const PostButton = styled(Button)`
+//   background-color: #2196f3;
+//   color: #fff;
+//   &:hover {
+//     background-color: #1976d2;
+//   }
+// `;
 
 const Header = styled.div`
   display: flex;

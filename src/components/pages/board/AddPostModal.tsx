@@ -47,8 +47,6 @@ export default function AddPostModal({ open, onClose }: AddPostModalProps) {
         mylistItem: selectedItem,
         author: currentUser.email,
       });
-      console.log("Selected item to upload as post:", selectedItem);
-      console.log("Post title:", data.title);
 
       onClose();
     } else {

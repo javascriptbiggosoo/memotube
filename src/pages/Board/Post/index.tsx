@@ -1,5 +1,5 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { YoutubeVideo } from "../../../components/YoutubeVideo/YoutubeVideo";
 import MemoItems from "../../../components/pages/home/Memopad/MemoItems";
 import styled from "styled-components";
@@ -7,11 +7,34 @@ import { Box, Button } from "@mui/material";
 import { useVideoStartInit } from "../../../hooks/useVideoStartInit";
 import { usePost } from "../../../hooks/usePost";
 import LikeButton from "../../../components/pages/board/post/LikeButton";
+import { currentUserState } from "../../../atoms/userAtoms";
+import { useRecoilValue } from "recoil";
 
 export default function PostPage() {
   const { postId } = useParams<"postId">();
-  const { postData } = usePost(postId!);
+  const { postData, deletePost, toggleLike } = usePost(postId!);
+  const currentUser = useRecoilValue(currentUserState);
+  const [liked, setLiked] = useState(
+    postData?.likes.likedUser.includes(currentUser?.email || "없다능") || false
+  );
+  const [likeCount, setLikeCount] = useState(postData?.likes.likeCount || 0);
   useVideoStartInit();
+  const navigate = useNavigate();
+
+  const handleDeletePost = () => {
+    if (!confirm("정말 삭제하시겠습니까?")) {
+      return;
+    }
+    // 게시글 삭제 로직 추가
+    deletePost(postId!);
+    navigate("/board");
+  };
+
+  const handleLike = () => {
+    toggleLike(liked);
+    setLiked(!liked);
+    setLikeCount((prev) => (liked ? prev - 1 : prev + 1));
+  };
 
   return (
     <div>
@@ -21,12 +44,19 @@ export default function PostPage() {
             <Title>{postData.title}</Title>
             <Actions>
               <LikeButton
-                likeCount={postData.likes.likeCount}
-                onClick={() => {}}
+                likeCount={likeCount}
+                onClick={handleLike}
+                liked={liked}
               />
-              <DeleteButton variant="contained" color="warning">
-                게시글 삭제
-              </DeleteButton>
+              {currentUser && currentUser.email === postData.author && (
+                <DeleteButton
+                  variant="contained"
+                  color="warning"
+                  onClick={handleDeletePost}
+                >
+                  게시글 삭제
+                </DeleteButton>
+              )}
             </Actions>
           </Header>
           <YoutubeVideo videoId={postData.content.videoId} />
