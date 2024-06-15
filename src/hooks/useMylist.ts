@@ -24,7 +24,7 @@ export const useMylist = () => {
   const addMylistItem = ({ videoId, memos, title }: IAddMylistItemProps) => {
     mutate({
       id: crypto.randomUUID(),
-      thumbnail: `https://img.youtube.com/vi/${videoId}/default.jpg`,
+      thumbnail: `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`,
       content: {
         id: crypto.randomUUID(),
         videoId,
