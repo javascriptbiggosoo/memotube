@@ -1,4 +1,4 @@
-import{j as o,F as b,a as s,B as m,z as v,c as C,d as y,r as l,w as B,b as L}from"./index-C4nHmQWu.js";import{u as P,Y as S,M as I}from"./useVideoStartInit-BFpRoc5Y.js";import{a as M}from"./usePost-oqiVXco2.js";import{M as w}from"./MDialog-DH_VjTep.js";import"./useQuery-BO4Vchqz.js";function z({onClick:i,likeCount:e,liked:r}){return o.jsxs(E,{onClick:i,size:"large",color:r?"error":"primary",children:[o.jsx(b,{}),e||0]})}const E=s(m)`
+import{j as o,F as b,a as s,B as m,z as v,c as C,d as y,r as l,w as B,b as L}from"./index-D1pjRAnF.js";import{u as P,Y as S,M as I}from"./useVideoStartInit-C_l_d0DQ.js";import{a as M}from"./usePost-C1ogWSmd.js";import{M as w}from"./MDialog-DpMpCuOc.js";import"./useQuery-C5irpW9I.js";function z({onClick:i,likeCount:e,liked:r}){return o.jsxs(E,{onClick:i,size:"large",color:r?"error":"primary",children:[o.jsx(b,{}),e||0]})}const E=s(m)`
   display: flex;
   gap: 6px;
 
