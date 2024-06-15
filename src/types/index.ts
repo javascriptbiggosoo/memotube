@@ -26,18 +26,12 @@ export interface IMylistItem {
   content: IVideoMemos;
 }
 
-export interface IPost {
-  _id?: string;
-  id: string;
-  thumbnail: string;
-  title: string;
-  content: IVideoMemos;
+export interface IPost extends IMylistItem {
   author: string;
-  createdAt: number;
   likes: ILikes;
   category?: string;
 }
-interface ILikes {
+export interface ILikes {
   _id?: string;
   likeCount: number;
   likedUser: string[];

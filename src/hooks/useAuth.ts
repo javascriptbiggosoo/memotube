@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { currentUserState } from "../atoms/userAtoms";
-import { setItem } from "../utils/localStorage";
+import { removeItem, setItem } from "../utils/localStorage";
 import {
   ILoginResponse,
   IFormInput,
@@ -55,7 +55,15 @@ const useAuth = () => {
     signupMutation.mutate({ email, password });
   };
 
+  const handleLogout = () => {
+    removeItem("token");
+    setCurrentUser(null);
+    alert("로그아웃 되었습니다.");
+    navigate("/");
+  };
+
   return {
+    handleLogout,
     handleLogin,
     handleSignup,
     isLoggingIn: loginMutation.isSuccess,

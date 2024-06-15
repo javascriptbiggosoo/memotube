@@ -1,6 +1,11 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  InvalidateQueryFilters,
+  useMutation,
+  useQuery,
+} from "@tanstack/react-query";
 import { IMylistItem } from "../types";
 import { deleteMylist, getMylistItem } from "../api/mylist.api";
+import { queryClient } from "../api/queryClient";
 
 export const useMylistItem = (listId: string) => {
   const { data } = useQuery<IMylistItem>({
@@ -9,10 +14,16 @@ export const useMylistItem = (listId: string) => {
     staleTime: 0,
     refetchOnWindowFocus: true,
   });
+
+  return { mylistItemData: data };
+};
+
+export const useDeleteMylistItem = () => {
   const { mutate } = useMutation({
     mutationFn: (mylistId: string) => deleteMylist(mylistId),
     onSuccess: () => {
-      // 성공시
+      // 성공시 필요한 로직 추가
+      queryClient.invalidateQueries(["mylist"] as InvalidateQueryFilters);
     },
   });
 
@@ -20,5 +31,5 @@ export const useMylistItem = (listId: string) => {
     mutate(mylistId);
   };
 
-  return { mylistItemData: data, deleteMylistItem };
+  return { deleteMylistItem };
 };

@@ -1,34 +1,21 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
-import { Link, useMatch, useNavigate } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
-
+import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../../../atoms/userAtoms";
-// import AboutModal from "./AboutModal";
 import AuthModal from "./AuthModal";
-import { removeItem } from "../../../../utils/localStorage";
+import useAuth from "../../../../hooks/useAuth";
 
 export default function Header() {
-  // const [openHowTo, setOpenHowTo] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const currentUser = useRecoilValue(currentUserState);
   const matchBoard = useMatch("/board");
   const matchMylist = useMatch("/mylist");
-  const navigate = useNavigate();
+  const { handleLogout } = useAuth();
 
-  // const handleAboutClick = () => {
-  //   setOpenHowTo((prev) => !prev);
-  // };
   const handleLoginClick = () => {
     setOpenLogin((prev) => !prev);
-  };
-
-  const logout = () => {
-    removeItem("token");
-    setCurrentUser(null);
-    alert("로그아웃 되었습니다.");
-    navigate("/");
   };
 
   return (
@@ -86,18 +73,12 @@ export default function Header() {
                 </Link>
               </Item>
             )}
-            {/* <AboutModal
-              open={openHowTo}
-              handleClose={() => {
-                setOpenHowTo(false);
-              }}
-            /> */}
+
             {currentUser ? (
-              <Item onClick={logout}>로그아웃</Item>
+              <Item onClick={handleLogout}>로그아웃</Item>
             ) : (
               <Item onClick={handleLoginClick}>로그인</Item>
             )}
-            {/* <Item onClick={handleAboutClick}>사용법</Item> */}
             <AuthModal
               open={openLogin}
               handleClose={() => {

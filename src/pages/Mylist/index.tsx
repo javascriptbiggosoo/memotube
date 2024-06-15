@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -10,17 +9,21 @@ import {
   ListItemAvatar,
   Avatar,
   IconButton,
+  Typography,
 } from "@mui/material";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../atoms/userAtoms";
 import { FaTrash } from "react-icons/fa";
 import { useMylist } from "../../hooks/useMylist";
+import { useDeleteMylistItem } from "../../hooks/useMylistItem";
+import MLoading from "../../components/common/MLoading";
 
 export default function MylistPage() {
   const currentUser = useRecoilValue(currentUserState);
   const navigate = useNavigate();
-  const { mylistData } = useMylist();
+  const { mylistData, isMylistLoading } = useMylist();
+  const { deleteMylistItem } = useDeleteMylistItem();
 
   useEffect(() => {
     if (!currentUser) {
@@ -34,16 +37,21 @@ export default function MylistPage() {
   };
 
   const handleDelete = (id: string) => {
-    console.log("삭제", id);
+    if (!confirm("정말 삭제하시겠습니까?")) {
+      return;
+    }
+    deleteMylistItem(id);
   };
+
   return (
     <MylistContainer>
       <Header>
         <Title>마이리스트</Title>
       </Header>
-      <StyledList>
-        {mylistData &&
-          mylistData.map((memo) => (
+      {isMylistLoading && <MLoading />}
+      {mylistData && mylistData.length > 0 ? (
+        <StyledList>
+          {mylistData.map((memo) => (
             <div key={memo.id}>
               <StyledListItem>
                 <ListItemAvatar onClick={() => handleItemClick(memo.id)}>
@@ -67,7 +75,10 @@ export default function MylistPage() {
               <Divider />
             </div>
           ))}
-      </StyledList>
+        </StyledList>
+      ) : (
+        <EmptyMessage>마이리스트가 비어 있습니다.</EmptyMessage>
+      )}
     </MylistContainer>
   );
 }
@@ -110,4 +121,11 @@ const StyledAvatar = styled(Avatar)`
   width: 60px;
   height: 60px;
   margin-right: 16px;
+`;
+
+const EmptyMessage = styled(Typography)`
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  color: #888;
 `;

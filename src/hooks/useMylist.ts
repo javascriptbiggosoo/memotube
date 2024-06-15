@@ -3,7 +3,7 @@ import { IMemo, IMylistItem } from "../types";
 import { createMylist, getMylist } from "../api/mylist.api";
 
 export const useMylist = () => {
-  const { data } = useQuery<IMylistItem[]>({
+  const { data, isLoading } = useQuery<IMylistItem[]>({
     queryKey: ["mylist"],
     queryFn: getMylist,
     staleTime: 0,
@@ -35,5 +35,5 @@ export const useMylist = () => {
     });
   };
 
-  return { mylistData: data, addMylistItem };
+  return { mylistData: data, addMylistItem, isMylistLoading: isLoading };
 };

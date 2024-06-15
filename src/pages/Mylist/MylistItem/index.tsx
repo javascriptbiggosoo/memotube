@@ -5,13 +5,16 @@ import { useVideoStartInit } from "../../../hooks/useVideoStartInit";
 import { Box, Button } from "@mui/material";
 import MemoItems from "../../../components/pages/home/Memopad/MemoItems";
 import { YoutubeVideo } from "../../../components/YoutubeVideo/YoutubeVideo";
-import { useMylistItem } from "../../../hooks/useMylistItem";
+import {
+  useDeleteMylistItem,
+  useMylistItem,
+} from "../../../hooks/useMylistItem";
 
 export default function MylistItemPage() {
   const { listId } = useParams<"listId">();
   const { mylistItemData } = useMylistItem(listId!);
   useVideoStartInit();
-  const { deleteMylistItem } = useMylistItem(listId!);
+  const { deleteMylistItem } = useDeleteMylistItem();
   const navigate = useNavigate();
 
   const handleDelete = () => {
@@ -21,6 +24,12 @@ export default function MylistItemPage() {
     deleteMylistItem(listId!);
     navigate("/mylist");
   };
+
+  const handlePost = () => {
+    // 게시판에 등록하는 로직 추가
+    console.log("게시판에 등록:", listId);
+  };
+
   return (
     <div>
       {mylistItemData && (
@@ -35,6 +44,13 @@ export default function MylistItemPage() {
               >
                 리스트에서 삭제
               </DeleteButton>
+              <PostButton
+                variant="contained"
+                color="primary"
+                onClick={handlePost}
+              >
+                게시판에 등록
+              </PostButton>
             </Actions>
           </Header>
           <YoutubeVideo videoId={mylistItemData.content.videoId} />
@@ -55,6 +71,14 @@ const DeleteButton = styled(Button)`
   }
 `;
 
+const PostButton = styled(Button)`
+  background-color: #2196f3;
+  color: #fff;
+  &:hover {
+    background-color: #1976d2;
+  }
+`;
+
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -65,6 +89,7 @@ const Header = styled.div`
 const Actions = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px; /* 버튼 사이에 간격 추가 */
 `;
 const Title = styled.h2`
   font-size: 2rem;

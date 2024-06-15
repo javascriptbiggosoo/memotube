@@ -1,12 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { YoutubeVideo } from "../../../components/YoutubeVideo/YoutubeVideo";
 import MemoItems from "../../../components/pages/home/Memopad/MemoItems";
 import styled from "styled-components";
 import { Box, Button } from "@mui/material";
 import { useVideoStartInit } from "../../../hooks/useVideoStartInit";
 import { usePost } from "../../../hooks/usePost";
+import LikeButton from "../../../components/pages/board/post/LikeButton";
 
 export default function PostPage() {
   const { postId } = useParams<"postId">();
@@ -20,7 +20,10 @@ export default function PostPage() {
           <Header>
             <Title>{postData.title}</Title>
             <Actions>
-              <ThumbUpIconStyled />
+              <LikeButton
+                likeCount={postData.likes.likeCount}
+                onClick={() => {}}
+              />
               <DeleteButton variant="contained" color="warning">
                 게시글 삭제
               </DeleteButton>
@@ -54,14 +57,9 @@ const Title = styled.h2`
 `;
 
 const Actions = styled.div`
+  gap: 6px;
   display: flex;
   align-items: center;
-`;
-
-const ThumbUpIconStyled = styled(ThumbUpIcon)`
-  margin-right: 10px;
-  cursor: pointer;
-  color: #1976d2;
 `;
 
 const DeleteButton = styled(Button)`
