@@ -12,7 +12,6 @@ interface IGetPostsResponse {
   totalPosts: number;
 }
 export const fetchGetPosts = async (page: number, limit: number) => {
-  console.log("아");
   console.log(BASE_URL + `/posts?page=${page}&limit=${limit}`);
   try {
     const response = await axiosInstance.get<IGetPostsResponse>(
