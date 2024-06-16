@@ -1,4 +1,4 @@
-import{j as o,F as b,a as s,B as u,z as v,c as C,d as y,r as l,w as B,b as L}from"./index-CxlFRWB2.js";import{u as P,Y as S,M as I}from"./useVideoStartInit-CCNjw0z_.js";import{a as M}from"./usePost-BE_wFizy.js";import{M as w}from"./MDialog-BHQ9WYYX.js";import"./useQuery-1-z5emCD.js";function F({onClick:i,likeCount:e,liked:r}){return o.jsxs(z,{onClick:i,size:"large",color:r?"error":"primary",children:[o.jsx(b,{}),e||0]})}const z=s(u)`
+import{j as o,F as b,a as s,B as u,z as v,c as C,d as y,r as l,w as B,b as L}from"./index-DNpAFdVP.js";import{u as P,Y as S,M as I}from"./useVideoStartInit-D-d_ksap.js";import{a as M}from"./usePost-doQU9ki-.js";import{M as w}from"./MDialog-OEQTNGr_.js";import"./useQuery-CZIoa1Mw.js";function F({onClick:i,likeCount:e,liked:r}){return o.jsxs(z,{onClick:i,size:"large",color:r?"error":"primary",children:[o.jsx(b,{}),e||0]})}const z=s(u)`
   display: flex;
   gap: 6px;
 
