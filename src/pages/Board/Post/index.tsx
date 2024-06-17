@@ -58,21 +58,21 @@ export default function PostPage() {
           <Header>
             <Title>{postData.title}</Title>
             <Actions>
+              {currentUser && (
+                <LikeButton
+                  likeCount={likeCount}
+                  onClick={handleLike}
+                  liked={liked}
+                />
+              )}
               {currentUser && currentUser.email === postData.author && (
-                <>
-                  <LikeButton
-                    likeCount={likeCount}
-                    onClick={handleLike}
-                    liked={liked}
-                  />
-                  <DeleteButton
-                    variant="contained"
-                    color="warning"
-                    onClick={handleDeletePost}
-                  >
-                    게시글 삭제
-                  </DeleteButton>
-                </>
+                <DeleteButton
+                  variant="contained"
+                  color="warning"
+                  onClick={handleDeletePost}
+                >
+                  게시글 삭제
+                </DeleteButton>
               )}
             </Actions>
           </Header>
