@@ -2,7 +2,7 @@
 
 Memotube는 YouTube 비디오에 대한 메모를 작성하고 관리할 수 있는 웹 애플리케이션입니다. 프론트엔드는 React와 TypeScript를 사용하여 개발되었으며, 사용자 인증과 메모 관리 기능을 포함하고 있습니다. 보다 페이지를 쉽게 이해하실 수 있도록 더미 데이터를 포함하고 있습니다.
 
-배포 링크: [https://javascriptbiggosoo.github.io/memotube](https://javascriptbiggosoo.github.io/memotube)
+배포 링크: [Memotube](https://javascriptbiggosoo.github.io/memotube)
 
 백엔드 코드: https://github.com/javascriptbiggosoo/memotube-BE
 
@@ -52,3 +52,4 @@ Memotube는 YouTube 비디오에 대한 메모를 작성하고 관리할 수 있
 - 게시판 댓글 기능
 - 마이리스트 수정 기능
 - 비밀번호 수정 기능
+- 카테고리 분류 및 추천수 상위 게시글 표시
