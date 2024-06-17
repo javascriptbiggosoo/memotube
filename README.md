@@ -4,6 +4,8 @@ Memotube는 YouTube 비디오에 대한 메모를 작성하고 관리할 수 있
 
 배포 링크: [https://javascriptbiggosoo.github.io/memotube](https://javascriptbiggosoo.github.io/memotube)
 
+백엔드 코드: https://github.com/javascriptbiggosoo/memotube-BE
+
 ## 주요 기능
 
 - **사용자 인증**: JWT를 사용한 로그인 및 회원가입 기능
