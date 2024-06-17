@@ -58,8 +58,9 @@ export default function MylistPage() {
       <Header>
         <Title>마이리스트</Title>
       </Header>
-      {isMylistLoading && <MLoading />}
-      {mylistData && mylistData.length > 0 ? (
+      {isMylistLoading ? (
+        <MLoading />
+      ) : mylistData && mylistData.length > 0 ? (
         <StyledList>
           {mylistData.map((memo) => (
             <div key={memo.id}>

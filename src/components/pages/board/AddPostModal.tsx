@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MModal from "../../common/MModal";
 import { useMylist } from "../../../hooks/useMylist";
 import {
@@ -39,6 +39,13 @@ export default function AddPostModal({ open, onClose }: AddPostModalProps) {
   const handleSelectItem = (item: IMylistItem) => {
     setSelectedItem(item);
   };
+
+  useEffect(() => {
+    if (mylistData && mylistData.length === 0) {
+      alert("게시글을 올리려면 마이리스트에 메모를 추가해주세요.");
+      onClose();
+    }
+  }, [mylistData, onClose]);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     if (selectedItem && currentUser?.email) {
